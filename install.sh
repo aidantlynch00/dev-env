@@ -154,7 +154,8 @@ if [ $install_zellij = 0 ]; then
         echo "zellij already installed!"
     fi
 
-    # TODO: install zellij configuration
+    # install zellij config and layouts
+    cp -r ./zellij $USER_HOME/.config/
 fi
 
 # install Hack nerd font

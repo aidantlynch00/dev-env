@@ -1,0 +1,39 @@
+layout {
+    pane_template name="plain-pane" borderless=true
+
+    tab name="Code" {
+        plain-pane size=1 {
+            plugin location="tab-bar"
+        }
+
+        plain-pane command="nvim"
+
+        plain-pane size=1 {
+            plugin location="status-bar"
+        }
+    }
+    
+    tab name="Term" focus=true {
+        plain-pane size=1 {
+            plugin location="tab-bar"
+        }
+
+        plain-pane
+
+        plain-pane size=1 {
+            plugin location="status-bar"
+        }
+    }
+
+    tab name="Git" {
+        plain-pane size=1 {
+            plugin location="tab-bar"
+        }
+
+        plain-pane command="lazygit"
+
+        plain-pane size=1 {
+            plugin location="status-bar"
+        }
+    }
+}
