@@ -1,12 +1,4 @@
-local lang_servers = {
-    ["rust_analyzer"] = {},
-    ["clangd"] = {},
-    ["lua_ls"] = {},
-    ["bashls"] = {},
-    ["ts_ls"] = {},
-    ["html"] = {},
-    ["cssls"] = {},
-}
+local lang_servers = { "rust_analyzer", "clangd", "lua_ls", "bashls", "ts_ls", "html", "cssls" }
 
 require("mason").setup()
 require("mason-lspconfig").setup {
@@ -26,8 +18,8 @@ vim.g.coq_settings = {
 
 local lsp = require("lspconfig")
 local coq = require("coq")
-for lang_server, settings in pairs(lang_servers) do
-    lsp[lang_server].setup(coq.lsp_ensure_capabilities(settings))
+for _, lang_server in pairs(lang_servers) do
+    lsp[lang_server].setup(coq.lsp_ensure_capabilities())
 end
 
 vim.cmd("COQnow -s")
