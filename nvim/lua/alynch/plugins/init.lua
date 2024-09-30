@@ -44,13 +44,30 @@ return require("packer").startup(function(use)
     }
 
     use {
-        'nvim-telescope/telescope.nvim',
-        branch = '0.1.x',
+        "nvim-telescope/telescope.nvim",
+        branch = "0.1.x",
         requires = {
             "nvim-lua/plenary.nvim"
         }
     }
 
+    use {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = "make"
+    }
+
+    -- configure LSPs
+    use "williamboman/mason.nvim"
+    use "williamboman/mason-lspconfig.nvim"
+    use "neovim/nvim-lspconfig"
+    use {
+        "ms-jpq/coq_nvim",
+        requires = {
+            "ms-jpq/coq.artifacts"
+        }
+    }
+
+    -- colorschemes
     use "folke/tokyonight.nvim"
 
 	-- sync packer after bootstrapping
@@ -59,6 +76,9 @@ return require("packer").startup(function(use)
 	end
 
     -- require plugin configurations
+    require("alynch.plugins.treesitter")
     require("alynch.plugins.tokyonight")
     require("alynch.plugins.lualine")
+    require("alynch.plugins.telescope")
+    require("alynch.plugins.lsp")
 end)
