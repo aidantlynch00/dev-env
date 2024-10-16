@@ -131,7 +131,9 @@ if [ $install_nvim = 0 ]; then
     fi
 
     # install neovim config
+    echo "Removing existing neovim config..."
     rm -rf $USER_HOME/.config/nvim
+    echo "Installing neovim config..."
     cp -r ./nvim $USER_HOME/.config/
 
     # install neovim bash environment
@@ -155,6 +157,7 @@ if [ $install_zellij = 0 ]; then
     fi
 
     # install zellij config and layouts
+    echo "Installing zellij config and layouts..."
     cp -r ./zellij $USER_HOME/.config/
 fi
 
