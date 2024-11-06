@@ -5,7 +5,9 @@ USER_HOME=$(eval echo ~$SUDO_USER)
 # flags for installation options
 install_packages=1
 install_nvim=1
+install_nvim_config=1
 install_zellij=1
+install_zellij_config=1
 install_nerd_font=1
 
 # other options
@@ -19,8 +21,10 @@ while [ "$#" -gt 0 ]; do
             echo "install.sh [OPTIONS]"
             echo "  --help                        show this message"
             echo "  --packages [package manager]  install dev packages uses the provided package manager (currently only dnf is supported)"
-            echo "  --nvim                        install neovim and its configurations"
-            echo "  --zellij                      install zellij and its configurations and themes"
+            echo "  --nvim                        install neovim"
+            echo "  --nvim-config                 install neovim configurations"
+            echo "  --zellij                      install zellij"
+            echo "  --zellij-config               install zellij configurations, layouts, and themes"
             echo "  --nerd-font                   install the Hack nerd font"
             echo "  --all                         install everything"
             exit
@@ -32,8 +36,14 @@ while [ "$#" -gt 0 ]; do
         --nvim)
             install_nvim=0
             ;;
+        --nvim-config)
+            install_nvim_config=0
+            ;;
         --zellij)
             install_zellij=0
+            ;;
+        --zellij-config)
+            install_zellij_config=0
             ;;
         --nerd-font)
             install_nerd_font=0
@@ -41,7 +51,9 @@ while [ "$#" -gt 0 ]; do
         --all)
             install_packages=0
             install_nvim=0
+            install_nvim_config=0
             install_zellij=0
+            install_zellij_config=0
             install_nerd_font=0
             get_package_manager=0
             ;;
@@ -119,17 +131,16 @@ if [ $install_packages = 0 ]; then
     fi
 fi
 
-# install neovim and config
+# install neovim
 if [ $install_nvim = 0 ]; then
     # install neovim appimage
-    if ! [ -e /usr/bin/nvim ]; then
-        wget "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
-        mv nvim.appimage /usr/bin/nvim
-        chmod 755 /usr/bin/nvim
-    else
-        echo "neovim already installed!"
-    fi
+    echo "Installing neovim..."
+    wget "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+    mv nvim.appimage /usr/bin/nvim
+    chmod 755 /usr/bin/nvim
+fi
 
+if [ $install_nvim_config = 0 ]; then
     # install neovim config
     echo "Removing existing neovim config..."
     rm -rf $USER_HOME/.config/nvim
@@ -143,21 +154,21 @@ if [ $install_nvim = 0 ]; then
     if ! grep -q -x "$setup_step" $USER_HOME/.bashrc; then
         echo "$setup_step" >> $USER_HOME/.bashrc
     fi
+
 fi
 
-# install zellij and config
+# install zellij
 if [ $install_zellij = 0 ]; then
-    if ! [ -e /usr/bin/zellij ]; then
-        install_tar \
-            "https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz" \
-            "zellij" \
-            "/usr/bin/"
-    else
-        echo "zellij already installed!"
-    fi
+    echo "Installing zellij..."
+    install_tar \
+        "https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz" \
+        "zellij" \
+        "/usr/bin/"
+fi
 
-    # install zellij config and layouts
-    echo "Installing zellij config and layouts..."
+if [ $install_zellij_config = 0 ]; then
+    # install zellij config, layouts, and themes
+    echo "Installing zellij config, layouts, and themes..."
     cp -r ./zellij $USER_HOME/.config/
 fi
 
