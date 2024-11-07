@@ -1,6 +1,13 @@
 #!/bin/sh
 
-USER_HOME=$(eval echo ~$SUDO_USER)
+# get info about the calling user
+if [ "$(id -u)" = 0 ]; then
+    REAL_USER="$SUDO_USER"
+    USER_HOME=$(eval echo ~$SUDO_USER)
+else
+    REAL_USER="$USER"
+    USER_HOME="$HOME"
+fi
 
 # flags for installation options
 install_packages=1
@@ -146,6 +153,7 @@ if [ $install_nvim_config = 0 ]; then
     rm -rf $USER_HOME/.config/nvim
     echo "Installing neovim config..."
     cp -r ./nvim $USER_HOME/.config/
+    chown "$REAL_USER:$REAL_USER" $USER_HOME/.config/nvim
 
     # install neovim bash environment
     [ -f $USER_HOME/.nvim_env.sh ] || cp nvim_env.sh $USER_HOME/.nvim_env.sh
@@ -170,6 +178,7 @@ if [ $install_zellij_config = 0 ]; then
     # install zellij config, layouts, and themes
     echo "Installing zellij config, layouts, and themes..."
     cp -r ./zellij $USER_HOME/.config/
+    chown "$REAL_USER:$REAL_USER" $USER_HOME/.config/zellij
 fi
 
 # install Hack nerd font
