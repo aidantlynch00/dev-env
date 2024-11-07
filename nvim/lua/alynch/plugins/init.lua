@@ -1,3 +1,16 @@
+-- require plugin configurations
+local require_configs = function()
+    require("alynch.plugins.treesitter")
+    require("alynch.plugins.tokyonight")
+    require("alynch.plugins.telescope")
+    require("alynch.plugins.harpoon")
+    require("alynch.plugins.lsp")
+    require("alynch.plugins.aerial")
+    require("alynch.plugins.neotree")
+    require("alynch.plugins.ai")
+    require("alynch.plugins.lualine")
+end
+
 local bootstrap_packer = function()
 	local fn = vim.fn
 	local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
@@ -56,6 +69,15 @@ return require("packer").startup(function(use)
         run = "make"
     }
 
+    use {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim"
+        }
+    }
+
     -- configure LSPs
     use "williamboman/mason.nvim"
     use "williamboman/mason-lspconfig.nvim"
@@ -67,6 +89,11 @@ return require("packer").startup(function(use)
         }
     }
 
+    -- configure local genAI
+    use "David-Kunz/gen.nvim"
+
+    use "stevearc/aerial.nvim"
+
     -- colorschemes
     use "folke/tokyonight.nvim"
 
@@ -75,10 +102,5 @@ return require("packer").startup(function(use)
 		require("packer").sync()
 	end
 
-    -- require plugin configurations
-    require("alynch.plugins.treesitter")
-    require("alynch.plugins.tokyonight")
-    require("alynch.plugins.lualine")
-    require("alynch.plugins.telescope")
-    require("alynch.plugins.lsp")
+    require_configs()
 end)
