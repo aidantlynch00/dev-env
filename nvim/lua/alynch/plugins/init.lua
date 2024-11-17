@@ -38,7 +38,8 @@ return require("packer").startup(function(use)
         }
     }
 
-    use "mbbill/undotree"
+    use "tpope/vim-surround"
+    use "tpope/vim-repeat"
 
     use {
         "nvim-lualine/lualine.nvim",
@@ -92,6 +93,7 @@ return require("packer").startup(function(use)
     -- configure local genAI
     use "David-Kunz/gen.nvim"
 
+    -- symbol tree
     use "stevearc/aerial.nvim"
 
     -- colorschemes
