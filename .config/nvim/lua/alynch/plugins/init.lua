@@ -8,6 +8,7 @@ local require_configs = function()
     require("alynch.plugins.lsp")
     require("alynch.plugins.aerial")
     require("alynch.plugins.neotree")
+    require("alynch.plugins.ai")
     require("alynch.plugins.lualine")
 end
 
@@ -92,6 +93,9 @@ return require("packer").startup(function(use)
             "ms-jpq/coq.artifacts"
         }
     }
+
+    -- local LLM generation
+    use "Robitx/gp.nvim"
 
     -- symbol tree
     use "stevearc/aerial.nvim"

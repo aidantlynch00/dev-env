@@ -52,3 +52,22 @@ map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
 
 -- set up aerial mapping
 map("n", "<leader>st", "<cmd>AerialToggle!<CR>")
+
+-- set up local LLM mappings
+map({ "n", "v", "x" }, "<leader>ag", "<cmd>GpNextAgent<CR>")
+
+-- chat mappings
+map("n", "<leader>ac", "<cmd>GpChatToggle vsplit<CR>")
+map("v", "<leader>ac", "<cmd>'<,'>GpChatToggle vsplit<CR>")
+map("n", "<leader>ar", "<cmd>GpChatRespond<CR>")
+
+-- code generation mappings
+map("v", "<leader>ai", "<cmd>'<,'>GpImplement<CR>")
+map("v", "<leader>aw", "<cmd>'<,'>GpRewrite<CR>")
+map("n", "<leader>aa", "<cmd>GpAppend<CR>")
+map("v", "<leader>aa", "<cmd>'<,'>GpAppend<CR>")
+map("n", "<leader>ap", "<cmd>GpPrepend<CR>")
+map("v", "<leader>ap", "<cmd>'<,'>GpPrepend<CR>")
+
+-- code review mappings
+map("v", "<leader>ae", "<cmd>'<,'>GpExplain<CR>")

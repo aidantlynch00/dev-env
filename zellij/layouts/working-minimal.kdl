@@ -1,0 +1,13 @@
+layout {
+    default_tab_template {
+        pane borderless=true size=1 {
+            plugin location="tab-bar"
+        }
+        pane borderless=true
+        pane borderless=true size=1 {
+            plugin location="status-bar"
+        }
+    }
+
+    tab
+}
