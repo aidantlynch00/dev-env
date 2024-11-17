@@ -33,7 +33,7 @@ while [ "$#" -gt 0 ]; do
             echo "  --zellij                      install zellij"
             echo "  --zellij-config               install zellij configurations, layouts, and themes"
             echo "  --nerd-font                   install the Hack nerd font"
-            echo "  --all                         install everything"
+            echo "  --all [package manager]       install everything"
             exit
             ;;
         --packages)
