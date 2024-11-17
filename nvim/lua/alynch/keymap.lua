@@ -39,7 +39,7 @@ map("n", "<leader>gl", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
 map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
 -- set up aerial mapping
-map("n", "<leader>st", "<cmd>AerialToggle<CR>", opts)
+map("n", "<leader>st", "<cmd>AerialToggle!<CR>", opts)
 
 -- set up genAI mappings
 map({ "n", "v" }, "<leader>ag", "<cmd>Gen<CR>", opts)
