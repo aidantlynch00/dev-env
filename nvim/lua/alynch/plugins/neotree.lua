@@ -1,7 +1,7 @@
 local neotree = require("neo-tree.command");
 local toggle = false
 
-function Neotree ()
+function NeotreeToggle()
     if toggle then
         neotree.execute({ action = "close" })
     else
