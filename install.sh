@@ -117,7 +117,10 @@ if [ $install_packages = 0 ]; then
         if [ -n "$(which $package_manager)" ]; then
             case $package_manager in
                 dnf)
-                    dnf --best install ripgrep fzf -y
+                    dnf --best install \
+                        ripgrep fzf \
+                        sqlite sqlite-devel \
+                        -y
                     ;;
             esac
         else

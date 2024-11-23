@@ -1,5 +1,6 @@
 -- require plugin configurations
 local require_configs = function()
+    require("alynch.plugins.annotate")
     require("alynch.plugins.treesitter")
     require("alynch.plugins.tokyonight")
     require("alynch.plugins.telescope")
@@ -27,6 +28,9 @@ return require("packer").startup(function(use)
 	use "wbthomason/packer.nvim"
     use "nvim-lua/plenary.nvim"
 
+    -- annotations
+    use "kkharji/sqlite.lua"
+    use "Sahas-Ananth/code_annotate.nvim"
     use {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v3.x",
