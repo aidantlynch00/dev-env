@@ -3,19 +3,30 @@ local actions = require("telescope.actions")
 
 telescope.setup {
     defaults = {
-        history = {
-            limit = 20,
+        layout_strategy = "vertical",
+        layout_config = {
+            anchor = "N",
+            width = 0.60,
+            height = 0.75,
+            scroll_speed = 3,
+        },
+        mappings = {
+            i = {
+                ["<C-D>"] = false,
+                ["<C-U>"] = false,
+                ["<C-E>"] = actions.preview_scrolling_down,
+                ["<C-Y>"] = actions.preview_scrolling_up,
+            },
+        },
+    },
+    pickers = {
+        buffers = {
             mappings = {
                 i = {
-                    ["<C-[>"] = actions.cycle_history_prev,
-                    ["<C-]>"] = actions.cycle_history_next
+                    ["<C-D>"] = actions.delete_buffer
                 },
-                n = {
-                    ["["] = actions.cycle_history_prev,
-                    ["]"] = actions.cycle_history_next
-                },
-            }
-        }
+            },
+        },
     },
     extensions = {
         fzf = {
