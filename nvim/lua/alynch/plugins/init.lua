@@ -95,7 +95,14 @@ return require("packer").startup(function(use)
     }
 
     -- local LLM generation
-    use "Robitx/gp.nvim"
+    use {
+        "olimorris/codecompanion.nvim",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "MeanderingProgrammer/render-markdown.nvim"
+        }
+    }
 
     -- symbol tree
     use "stevearc/aerial.nvim"
