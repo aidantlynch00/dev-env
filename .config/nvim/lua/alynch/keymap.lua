@@ -53,21 +53,18 @@ map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
 -- set up aerial mapping
 map("n", "<leader>st", "<cmd>AerialToggle!<CR>")
 
--- set up local LLM mappings
-map({ "n", "v", "x" }, "<leader>ag", "<cmd>GpNextAgent<CR>")
+-- set up local LLM mapping
+map("n", "<leader>aa", "<cmd>Telescope codecompanion<CR>")
 
--- chat mappings
-map("n", "<leader>ac", "<cmd>GpChatToggle vsplit<CR>")
-map("v", "<leader>ac", "<cmd>'<,'>GpChatToggle vsplit<CR>")
-map("n", "<leader>ar", "<cmd>GpChatRespond<CR>")
+-- chat mapping
+local codecompanion = require("codecompanion")
+map({ "n", "v" }, "<leader>ac", "<cmd>CodeCompanionChat Toggle<CR>")
 
--- code generation mappings
-map("v", "<leader>ai", "<cmd>'<,'>GpImplement<CR>")
-map("v", "<leader>aw", "<cmd>'<,'>GpRewrite<CR>")
-map("n", "<leader>aa", "<cmd>GpAppend<CR>")
-map("v", "<leader>aa", "<cmd>'<,'>GpAppend<CR>")
-map("n", "<leader>ap", "<cmd>GpPrepend<CR>")
-map("v", "<leader>ap", "<cmd>'<,'>GpPrepend<CR>")
+-- code generation mapping
+map({ "n", "v" }, "<leader>ap", function()
+    local prompt = vim.fn.input("Prompt: ")
+    vim.cmd("CodeCompanion " .. prompt)
+end)
 
--- code review mappings
-map("v", "<leader>ae", "<cmd>'<,'>GpExplain<CR>")
+-- code review mapping
+map("v", "<leader>ae", function() codecompanion.prompt("explain") end)
