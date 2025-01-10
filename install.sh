@@ -159,13 +159,10 @@ if [ $install_nvim_config = 0 ]; then
     chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/nvim
 
     # install neovim bash environment
-    [ -f $USER_HOME/.nvim_env.sh ] || cp nvim_env.sh $USER_HOME/.nvim_env.sh
-
-    setup_step="source $USER_HOME/.nvim_env.sh"
-    if ! grep -q -x "$setup_step" $USER_HOME/.bashrc; then
-        echo "$setup_step" >> $USER_HOME/.bashrc
-    fi
-
+    mkdir -p $USER_HOME/.bashrc.d
+    cp ./nvim.sh $USER_HOME/.bashrc.d/
+    chmod +x $USER_HOME/.bashrc.d/nvim.sh
+    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
 fi
 
 # install zellij
@@ -182,6 +179,12 @@ if [ $install_zellij_config = 0 ]; then
     echo "Installing zellij config, layouts, and themes..."
     cp -r ./zellij $USER_HOME/.config/
     chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/zellij
+
+    # install zellij bash script
+    mkdir -p $USER_HOME/.bashrc.d
+    cp ./zellij.sh $USER_HOME/.bashrc.d/
+    chmod +x $USER_HOME/.bashrc.d/zellij.sh
+    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
 fi
 
 # install Hack nerd font
