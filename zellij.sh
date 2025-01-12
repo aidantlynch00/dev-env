@@ -4,39 +4,47 @@ if ! [ -f $ZELLIJ_PROJECT_FILE ]; then
     touch $ZELLIJ_PROJECT_FILE
 fi
 
-zj() {
-    input_id=$1
-    use_id=""
-    use_path=""
-    use_layout=""
+alias zj="zellij"
 
-    # try to match the first argument with a known project
-    if [ -n "$input_id" ]; then
-        while IFS="," read -r id path layout; do
-            if [ "$id" = "$input_id" ]; then
-                use_id=$id
-                use_path=$path
-                use_layout=$layout
-            fi
-        done < $ZELLIJ_PROJECT_FILE
-    fi
+fp() {
+    read -r id path layout < <(\
+        cat $ZELLIJ_PROJECT_FILE | \
+        tr "," " " | \
+        fzf --delimiter=" " \
+            --nth=1 \
+            --with-nth=1 \
+            --no-multi \
+            --cycle \
+            --height=7 \
+            --layout=reverse \
+            --color=fg:#c0caf5 \
+            --color=gutter:-1 \
+            --color=header:#ff9e64 \
+            --color=hl+:#2ac3de \
+            --color=hl:#2ac3de \
+            --color=info:#545c7e \
+            --color=marker:#ff007c \
+            --color=pointer:#ff007c \
+            --color=prompt:#2ac3de \
+            --color=query:#c0caf5:regular \
+            --color=separator:#2ac3de \
+    )
 
-    if [ -n "$use_id" ]; then
-        pushd $use_path > /dev/null
+    if [ -n "$id" ]; then
+        pushd $path > /dev/null
 
         # attach to an existing project session if it exists, otherwise create
         # a new one with the project ID as the session name
-        if zellij list-sessions 2> /dev/null | awk '{ print $1 }' | grep -q "$use_id"; then
-            zellij attach --force-run-commands "$use_id"
-        elif [ -n "$use_layout" ]; then
-            zellij --session "$use_id" --new-session-with-layout "$use_layout"
+        if zellij list-sessions 2> /dev/null | awk '{ print $1 }' | grep -q "$id"; then
+            zellij attach --force-run-commands "$id"
+        elif [ -n "$layout" ]; then
+            zellij --session "$id" --new-session-with-layout "$layout"
         else
-            zellij --session "$use_id"
+            zellij --session "$id"
         fi
 
         popd > /dev/null
     else
-        # in the default case, pass all parameters to zellij
-        zellij "$@"
+        echo "No project selected!"
     fi
 }
