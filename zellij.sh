@@ -13,8 +13,10 @@ fp() {
         fzf --delimiter=" " \
             --nth=1 \
             --with-nth=1 \
+            --query="$1" \
             --no-multi \
             --cycle \
+            --select-1 \
             --height=7 \
             --layout=reverse \
             --color=fg:#c0caf5 \
