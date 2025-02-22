@@ -155,12 +155,12 @@ if [ $install_nvim_config = 0 ]; then
     echo "Removing existing neovim config..."
     rm -rf $USER_HOME/.config/nvim
     echo "Installing neovim config..."
-    cp -r ./nvim $USER_HOME/.config/
+    cp -r ./.config/nvim $USER_HOME/.config/
     chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/nvim
 
     # install neovim bash environment
     mkdir -p $USER_HOME/.bashrc.d
-    cp ./nvim.sh $USER_HOME/.bashrc.d/
+    cp ./.bashrc.d/nvim.sh $USER_HOME/.bashrc.d/
     chmod +x $USER_HOME/.bashrc.d/nvim.sh
     chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
 fi
@@ -177,12 +177,12 @@ fi
 if [ $install_zellij_config = 0 ]; then
     # install zellij config, layouts, and themes
     echo "Installing zellij config, layouts, and themes..."
-    cp -r ./zellij $USER_HOME/.config/
+    cp -r ./.config/zellij $USER_HOME/.config/
     chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/zellij
 
     # install zellij bash script
     mkdir -p $USER_HOME/.bashrc.d
-    cp ./zellij.sh $USER_HOME/.bashrc.d/
+    cp ./.bashrc.d/zellij.sh $USER_HOME/.bashrc.d/
     chmod +x $USER_HOME/.bashrc.d/zellij.sh
     chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
 fi
