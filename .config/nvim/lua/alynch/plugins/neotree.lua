@@ -1,3 +1,12 @@
+require("neo-tree").setup {
+    filesystem = {
+        filtered_items = {
+            visible = true,
+            hide_gitignored = true,
+        },
+    },
+}
+
 local neotree = require("neo-tree.command");
 local toggle = false
 

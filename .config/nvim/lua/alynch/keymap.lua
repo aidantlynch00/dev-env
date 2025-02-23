@@ -18,7 +18,7 @@ map("n", "<leader>ls", NeotreeToggle)
 -- set up telescope mappings
 local telescope = require("telescope")
 local builtin = require("telescope.builtin")
-map("n", "<leader>ff", builtin.find_files)
+map("n", "<leader>ff", function() builtin.find_files({ hidden = true }) end)
 map("n", "<leader>fg", builtin.live_grep)
 map("n", "<leader>fr", builtin.lsp_references)
 map("n", "<leader>fd", builtin.diagnostics)
