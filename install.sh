@@ -15,6 +15,7 @@ install_nvim=1
 install_nvim_config=1
 install_zellij=1
 install_zellij_config=1
+install_starship=1
 install_nerd_font=1
 
 # other options
@@ -52,6 +53,9 @@ while [ "$#" -gt 0 ]; do
         --zellij-config)
             install_zellij_config=0
             ;;
+        --starship)
+            install_starship=0
+            ;;
         --nerd-font)
             install_nerd_font=0
             ;;
@@ -61,6 +65,7 @@ while [ "$#" -gt 0 ]; do
             install_nvim_config=0
             install_zellij=0
             install_zellij_config=0
+            install_starship=0
             install_nerd_font=0
             get_package_manager=0
             ;;
@@ -120,6 +125,7 @@ if [ $install_packages = 0 ]; then
                     dnf --best install \
                         ripgrep fzf \
                         sqlite sqlite-devel \
+                        python pip \
                         -y
                     ;;
             esac
@@ -185,6 +191,22 @@ if [ $install_zellij_config = 0 ]; then
     cp ./.bashrc.d/zellij.sh $USER_HOME/.bashrc.d/
     chmod +x $USER_HOME/.bashrc.d/zellij.sh
     chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
+fi
+
+if [ $install_starship = 0 ]; then
+    # install latest starship release
+    echo "Installing starship..."
+    curl -sS https://starship.rs/install.sh | \
+        sh -s -- --bin-dir /usr/bin/ --force > /dev/null 2>&1
+
+    # install bash script
+    cp ./.bashrc.d/starship.sh $USER_HOME/.bashrc.d/
+    chmod +x $USER_HOME/.bashrc.d/starship.sh
+    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
+
+    # install starship config
+    cp ./.config/starship.toml $USER_HOME/.config/
+    chown "$REAL_USER:$REAL_USER" $USER_HOME/.config/starship.toml
 fi
 
 # install Hack nerd font

@@ -1,0 +1,115 @@
+format = """
+$time\
+[](fg:prev_bg bg:#313747)\
+$battery\
+[](fg:prev_bg bg:#50576a)\
+$username\
+$hostname\
+[](fg:prev_bg bg:#5e81c5)\
+$directory\
+[](fg:prev_bg bg:#394260)\
+$git_branch\
+[](fg:prev_bg)\
+\n\
+$character
+"""
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "#1d2230"
+format = "[](fg:$style)[ $time ](bg:$style)"
+
+[battery]
+disabled = false
+unknown_symbol = "󰂑"
+format = "([ $symbol [$percentage ]($style bg:prev_bg)](bg:prev_bg))"
+
+[[battery.display]]
+threshold = 5
+style = "fg:#e25c74 bold blink"
+charging_symbol = "󰂎"
+discharging_symbol = "󰂎"
+
+[[battery.display]]
+threshold = 15
+style = "bold fg:#e25c74"
+charging_symbol = "󰁺"
+discharging_symbol = "󰁺"
+
+[[battery.display]]
+threshold = 25
+style = "fg:#e25c74"
+charging_symbol = "󰁻"
+discharging_symbol = "󰁻"
+
+[[battery.display]]
+threshold = 35
+style = "fg:#e0af68"
+charging_symbol = "󰁼"
+discharging_symbol = "󰁼"
+
+[[battery.display]]
+threshold = 45
+style = "fg:#e0af68"
+charging_symbol = "󰁽"
+discharging_symbol = "󰁽"
+
+[[battery.display]]
+threshold = 55
+style = "fg:#e0af68"
+charging_symbol = "󰁾"
+discharging_symbol = "󰁾"
+
+[[battery.display]]
+threshold = 65
+style = ""
+charging_symbol = "󰁿"
+discharging_symbol = "󰁿"
+
+[[battery.display]]
+threshold = 75
+style = ""
+charging_symbol = "󰂀"
+discharging_symbol = "󰂀"
+
+[[battery.display]]
+threshold = 85
+style = ""
+charging_symbol = "󰂁"
+discharging_symbol = "󰂁"
+
+[[battery.display]]
+threshold = 95
+style = ""
+charging_symbol = "󰂂"
+discharging_symbol = "󰂂"
+
+[[battery.display]]
+threshold = 100
+style = ""
+charging_symbol = "󰁹"
+discharging_symbol = "󰁹"
+
+[username]
+disabled = false
+show_always = true
+style_user = "fg:white"
+style_root = "fg:red"
+format = "[ $user]($style bg:prev_bg)"
+
+[hostname]
+disabled = false
+ssh_only = false
+style = "fg:white bg:prev_bg"
+format = "([@$hostname ]($style))"
+
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = false
+format = "[ $path ](bg:prev_bg)"
+
+[git_branch]
+format = "([ $symbol$branch ](fg:#769ff0 bg:prev_bg))"
+
