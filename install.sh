@@ -11,6 +11,8 @@ fi
 
 # flags for installation options
 install_packages=1
+install_ghostty=1
+install_ghostty_config=1
 install_nvim=1
 install_nvim_config=1
 install_zellij=1
@@ -29,6 +31,8 @@ while [ "$#" -gt 0 ]; do
             echo "install.sh [OPTIONS]"
             echo "  --help                        show this message"
             echo "  --packages [package manager]  install dev packages uses the provided package manager (currently only dnf is supported)"
+            echo "  --ghostty                     install ghostty"
+            echo "  --ghostty-config              install ghostty configurations and themes"
             echo "  --nvim                        install neovim"
             echo "  --nvim-config                 install neovim configurations"
             echo "  --zellij                      install zellij"
@@ -40,6 +44,12 @@ while [ "$#" -gt 0 ]; do
         --packages)
             install_packages=0
             get_package_manager=0
+            ;;
+        --ghostty)
+            install_ghostty=0
+            ;;
+        --ghostty-config)
+            install_ghostty_config=0
             ;;
         --nvim)
             install_nvim=0
@@ -61,6 +71,8 @@ while [ "$#" -gt 0 ]; do
             ;;
         --all)
             install_packages=0
+            install_ghostty=0
+            install_ghostty_config=0
             install_nvim=0
             install_nvim_config=0
             install_zellij=0
@@ -96,7 +108,7 @@ install_tar () {
     pushd /tmp/install_tar > /dev/null
 
     # download the tar file
-    wget -O "$tar_file" "$url"
+    wget --quiet --output-document="$tar_file" "$url"
 
     # extract the archive given the compression used
     if echo "$tar_file" | grep -q ".tar.gz"; then
@@ -148,11 +160,50 @@ if [ $install_packages = 0 ]; then
     fi
 fi
 
+# install ghostty
+if [ $install_ghostty = 0 ]; then
+    echo "Installing ghostty..."
+
+    # install latest ghostty appimage, note: this is an unofficial build of ghostty
+    GHOSTTY_VERSION="1.1.2"
+    wget --quiet "https://github.com/psadi/ghostty-appimage/releases/download/v$GHOSTTY_VERSION/Ghostty-$GHOSTTY_VERSION-x86_64.AppImage"
+
+    # move appimage to standard path and make executable
+    BIN_PATH="/usr/bin/ghostty"
+    mv "Ghostty-$GHOSTTY_VERSION-x86_64.AppImage" $BIN_PATH
+    chmod 755 $BIN_PATH
+
+    # download the ghostty icon for the desktop application
+    ICON_PATH="/usr/share/icons/hicolor/256x256/apps/ghostty.png"
+    wget --quiet "https://raw.githubusercontent.com/ghostty-org/ghostty/main/images/icons/icon_256.png" \
+        --output-document=$ICON_PATH
+
+    # create a .desktop file for ghostty
+    cat > /usr/share/applications/ghostty.desktop << EOF
+[Desktop Entry]
+Type=Application
+
+Name=Ghostty
+Comment=Ghostty
+Exec=$BIN_PATH
+Icon=$ICON_PATH
+EOF
+fi
+
+# install ghostty config and themes
+if [ $install_ghostty_config = 0 ]; then
+    echo "Installing ghostty config and themes..."
+
+    # install ghostty config directory
+    cp -r ./.config/ghostty $USER_HOME/.config/
+    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/ghostty
+fi
+
 # install neovim
 if [ $install_nvim = 0 ]; then
     # install neovim appimage
     echo "Installing neovim..."
-    wget "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+    wget --quiet "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
     mv nvim.appimage /usr/bin/nvim
     chmod 755 /usr/bin/nvim
 fi

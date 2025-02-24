@@ -1,0 +1,27 @@
+# window settings
+fullscreen = true
+window-decoration = false
+
+# font settings
+font-family =             Hack Nerd Font Mono
+font-family-bold =        Hack Nerd Font Mono Bold
+font-family-italic =      Hack Nerd Font Mono Italic
+font-family-bold-italic = Hack Nerd Font Mono Bold Italic
+
+font-size = 10
+
+# theme
+theme = tokyonight_storm
+
+# keybinds
+
+# remove alt keybinds that conflict with zellij
+keybind = alt+one=unbind
+keybind = alt+two=unbind
+keybind = alt+three=unbind
+keybind = alt+four=unbind
+keybind = alt+five=unbind
+keybind = alt+six=unbind
+keybind = alt+seven=unbind
+keybind = alt+eight=unbind
+keybind = alt+nine=unbind
