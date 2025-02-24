@@ -123,6 +123,7 @@ if [ $install_packages = 0 ]; then
             case $package_manager in
                 dnf)
                     dnf --best install \
+                        fastfetch \
                         ripgrep fzf \
                         sqlite sqlite-devel \
                         python pip \
