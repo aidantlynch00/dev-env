@@ -18,8 +18,14 @@ telescope.setup {
                 ["<C-Y>"] = actions.preview_scrolling_up,
             },
         },
+        file_ignore_patterns = {
+            ".git/"
+        },
     },
     pickers = {
+        find_files = {
+            hidden = true,
+        },
         buffers = {
             mappings = {
                 i = {
