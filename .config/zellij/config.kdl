@@ -102,6 +102,7 @@ keybinds clear-defaults=true {
         }
     }
     shared_except "locked" {
+        bind "Alt d" { Detach; }
         bind "Alt q" { Quit; }
         bind "Alt n" { NewPane; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }

@@ -35,10 +35,20 @@ fp() {
     if [ -n "$id" ]; then
         pushd $path > /dev/null
 
-        # attach to an existing project session if it exists, otherwise create
-        # a new one with the project ID as the session name
-        if zellij list-sessions 2> /dev/null | awk '{ print $1 }' | grep -q "$id"; then
-            zellij attach --force-run-commands "$id"
+        # Attach to an existing project session if it exists and is running.
+        # If a session is dead it will be deleted and a new one will be started.
+        # Otherwise create a new one with the project ID as the session name.
+        new_session=1
+        session=$(zellij list-sessions 2> /dev/null | grep "$id")
+        if [ -z "$session" ]; then
+            new_session=0
+        elif echo "$session" | grep -q "EXITED"; then
+            new_session=0
+            zellij delete-session "$id" > /dev/null
+        fi
+
+        if [ $new_session -eq 1 ]; then
+            zellij attach "$id"
         elif [ -n "$layout" ]; then
             zellij --session "$id" --new-session-with-layout "$layout"
         else
