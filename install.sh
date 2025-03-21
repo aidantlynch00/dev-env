@@ -256,9 +256,9 @@ if [ $install_starship = 0 ]; then
     chmod +x $USER_HOME/.bashrc.d/starship.sh
     chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
 
-    # install starship config
-    cp ./.config/starship.toml $USER_HOME/.config/
-    chown "$REAL_USER:$REAL_USER" $USER_HOME/.config/starship.toml
+    # install starship configs
+    cp -r ./.config/starship $USER_HOME/.config/
+    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/starship
 fi
 
 # install Hack nerd font

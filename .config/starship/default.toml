@@ -1,15 +1,16 @@
 format = """
+[](fg:#3b4056)\
 $time\
-[](fg:prev_bg bg:#313747)\
+[](fg:#3b4056 bg:#525872)\
 $battery\
-[](fg:prev_bg bg:#50576a)\
+[](fg:#525872 bg:#6a708e)\
 $username\
 $hostname\
-[](fg:prev_bg bg:#5e81c5)\
+[](fg:#6a708e bg:#6483c8)\
 $directory\
-[](fg:prev_bg bg:#394260)\
+[](fg:#6483c8 bg:#383e5a)\
 $git_branch\
-[](fg:prev_bg)\
+[](fg:#383e5a)\
 \n\
 $character
 """
@@ -17,13 +18,14 @@ $character
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-style = "#1d2230"
-format = "[](fg:$style)[ $time ](bg:$style)"
+format = "[ $time](fg:#c0caf5 bg:#3b4056)"
 
 [battery]
 disabled = false
+full_symbol = "󰁹"
 unknown_symbol = "󰂑"
-format = "([ $symbol [$percentage ]($style bg:prev_bg)](bg:prev_bg))"
+empty_symbol = "󰂎"
+format = "([ $symbol [$percentage]($style bg:#525872)](bg:#525872))"
 
 [[battery.display]]
 threshold = 5
@@ -94,22 +96,18 @@ discharging_symbol = "󰁹"
 [username]
 disabled = false
 show_always = true
-style_user = "fg:white"
-style_root = "fg:red"
-format = "[ $user]($style bg:prev_bg)"
+format = "[ $user](fg:#c0caf5 bg:#6a708e)"
 
 [hostname]
 disabled = false
 ssh_only = false
-style = "fg:white bg:prev_bg"
-format = "([@$hostname ]($style))"
+format = "([@$hostname](fg:#c0caf5 bg:#6a708e))"
 
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"
 truncate_to_repo = false
-format = "[ $path ](bg:prev_bg)"
+format = "[ $path](fg:#c0caf5 bg:#6483c8)"
 
 [git_branch]
-format = "([ $symbol$branch ](fg:#769ff0 bg:prev_bg))"
-
+format = "([ $symbol$branch](fg:#7aa2f7 bg:#383e5a))"
