@@ -121,7 +121,7 @@ install_tar () {
 
     # install the target file to the destination
     mkdir -p "$dest"
-    mv $target "$dest"
+    mv -f $target "$dest"
 
     # remove the temp directory
     popd > /dev/null
@@ -233,10 +233,23 @@ if [ $install_zellij = 0 ]; then
 fi
 
 if [ $install_zellij_config = 0 ]; then
-    # install zellij config, layouts, and themes
-    echo "Installing zellij config, layouts, and themes..."
+    # install zellij config, layouts, plugins and themes
+    echo "Installing zellij config, layouts, plugins, and themes..."
     cp -r ./.config/zellij $USER_HOME/.config/
     chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/zellij
+
+    # create plugins directory
+    PLUGIN_DIR="$USER_HOME/.config/zellij/plugins"
+    mkdir -p $PLUGIN_DIR
+
+    # install plugins
+    ZJSTATUS_FILE="$PLUGIN_DIR/zjstatus.wasm"
+    wget --quiet "https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" \
+        --output-document=$ZJSTATUS_FILE
+    chmod +x $ZJSTATUS_FILE
+
+    # make sure plugins directory is owned by user
+    chown -R "$REAL_USER:$REAL_USER" $PLUGIN_DIR
 
     # install zellij bash script
     mkdir -p $USER_HOME/.bashrc.d

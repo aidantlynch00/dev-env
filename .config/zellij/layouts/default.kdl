@@ -2,25 +2,21 @@ layout {
     pane_template name="plain-pane" borderless=true
     default_tab_template {
         plain-pane size=1 {
-            plugin location="tab-bar"
+            plugin location="zjstatus"
         }
 
         children
-
-        plain-pane size=1 {
-            plugin location="status-bar"
-        }
     }
 
-    tab name="Code" {
+    tab name="󰅩 Code" {
         plain-pane command="nvim"
     }
     
-    tab name="Term" focus=true {
+    tab name=" Term" focus=true {
         plain-pane
     }
 
-    tab name="Git" {
+    tab name=" Git" {
         plain-pane command="lazygit"
     }
 }

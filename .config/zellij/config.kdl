@@ -152,6 +152,36 @@ plugins {
     status-bar location="zellij:status-bar"
     compact-bar location="zellij:compact-bar"
     session-manager location="zellij:session-manager"
+    zjstatus location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+        border_enabled "false"
+        hide_frame_except_for_search "true"
+
+        // tokyonight-storm
+        color_dark_text "#1d202f"
+        color_light_text "#c0caf5"
+        color_widget1_bg "#6a708e"
+        color_widget2_bg "#525872"
+        color_widget3_bg "#3b4056"
+        color_normal_tab_bg "#4f6599"
+        color_active_tab_bg "#7aa2f7"
+
+        format_left "{tabs}"
+        format_right "#[fg=$widget1_bg]#[fg=$light_text,bg=$widget1_bg]{session}#[fg=$widget1_bg] {command_battery} {command_time}"
+
+        tab_separator " "
+        tab_normal "#[fg=$normal_tab_bg]#[fg=$dark_text,bg=$normal_tab_bg]{name}#[fg=$normal_tab_bg]"
+        tab_active "#[fg=$active_tab_bg]#[fg=$dark_text,bg=$active_tab_bg]{name}#[fg=$active_tab_bg]"
+
+        command_battery_command "sh -c \"~/.config/zellij/widgets/battery.sh\""
+        command_battery_format "#[fg=$widget2_bg]#[fg=$light_text,bg=$widget2_bg]{stdout}#[fg=$widget2_bg]"
+        command_battery_interval "60"
+        command_battery_rendermode "static"
+
+        command_time_command "sh -c \"date +%R\""
+        command_time_format "#[fg=$widget3_bg]#[fg=$light_text,bg=$widget3_bg] {stdout}#[fg=$widget3_bg]"
+        command_time_interval "5"
+        command_time_rendermode "static"
+    }
 }
 
 // Choose what to do when zellij receives SIGTERM, SIGINT, SIGQUIT or SIGHUP
@@ -183,7 +213,7 @@ plugins {
 //   - true (default)
 //   - false
 //
-pane_frames false
+// pane_frames false
 
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options:
