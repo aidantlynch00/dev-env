@@ -2,7 +2,7 @@ format = """
 [](fg:#3b4056)\
 $time\
 [](fg:#3b4056 bg:#525872)\
-$battery\
+${custom.battery}\
 [](fg:#525872 bg:#6a708e)\
 $username\
 $hostname\
@@ -20,78 +20,11 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 format = "[ $time](fg:#c0caf5 bg:#3b4056)"
 
-[battery]
+[custom.battery]
 disabled = false
-full_symbol = "󰁹"
-unknown_symbol = "󰂑"
-empty_symbol = "󰂎"
-format = "([ $symbol [$percentage]($style bg:#525872)](bg:#525872))"
-
-[[battery.display]]
-threshold = 5
-style = "fg:#e25c74 bold blink"
-charging_symbol = "󰂎"
-discharging_symbol = "󰂎"
-
-[[battery.display]]
-threshold = 15
-style = "bold fg:#e25c74"
-charging_symbol = "󰁺"
-discharging_symbol = "󰁺"
-
-[[battery.display]]
-threshold = 25
-style = "fg:#e25c74"
-charging_symbol = "󰁻"
-discharging_symbol = "󰁻"
-
-[[battery.display]]
-threshold = 35
-style = "fg:#e0af68"
-charging_symbol = "󰁼"
-discharging_symbol = "󰁼"
-
-[[battery.display]]
-threshold = 45
-style = "fg:#e0af68"
-charging_symbol = "󰁽"
-discharging_symbol = "󰁽"
-
-[[battery.display]]
-threshold = 55
-style = "fg:#e0af68"
-charging_symbol = "󰁾"
-discharging_symbol = "󰁾"
-
-[[battery.display]]
-threshold = 65
-style = ""
-charging_symbol = "󰁿"
-discharging_symbol = "󰁿"
-
-[[battery.display]]
-threshold = 75
-style = ""
-charging_symbol = "󰂀"
-discharging_symbol = "󰂀"
-
-[[battery.display]]
-threshold = 85
-style = ""
-charging_symbol = "󰂁"
-discharging_symbol = "󰂁"
-
-[[battery.display]]
-threshold = 95
-style = ""
-charging_symbol = "󰂂"
-discharging_symbol = "󰂂"
-
-[[battery.display]]
-threshold = 100
-style = ""
-charging_symbol = "󰁹"
-discharging_symbol = "󰁹"
+when = true
+command = "~/.config/zellij/widgets/battery.sh"
+format = "[ $output](bg:#525872)"
 
 [username]
 disabled = false
