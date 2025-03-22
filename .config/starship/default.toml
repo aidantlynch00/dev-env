@@ -1,5 +1,5 @@
 format = """
-[](fg:#3b4056)\
+[](fg:#6a708e)\
 $time\
 [](fg:#3b4056 bg:#525872)\
 ${custom.battery}\
@@ -18,7 +18,7 @@ $character
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-format = "[ $time](fg:#c0caf5 bg:#3b4056)"
+format = "[  $time](fg:#c0caf5 bg:#3b4056)"
 
 [custom.battery]
 disabled = false

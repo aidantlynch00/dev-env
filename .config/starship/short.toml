@@ -1,5 +1,5 @@
 format = """
-[](fg:#6a708e)\
+[](fg:#6a708e)\
 $username\
 $hostname\
 [](fg:#6a708e bg:#6483c8)\
@@ -14,7 +14,7 @@ $character
 [username]
 disabled = false
 show_always = true
-format = "[$user](fg:#c0caf5 bg:#6a708e)"
+format = "[ $user](fg:#c0caf5 bg:#6a708e)"
 
 [hostname]
 disabled = false
