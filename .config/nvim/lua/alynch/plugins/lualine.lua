@@ -1,6 +1,10 @@
 require("lualine").setup {
     options = {
-        theme = "tokyonight"
+        theme = "tokyonight",
+        section_separators = {
+            left = "",
+            right = ""
+        },
     },
     sections = {
         lualine_a = { "mode" },
