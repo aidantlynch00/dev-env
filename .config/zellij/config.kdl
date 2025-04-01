@@ -152,6 +152,7 @@ plugins {
     status-bar location="zellij:status-bar"
     compact-bar location="zellij:compact-bar"
     session-manager location="zellij:session-manager"
+    zellij-switch location="file:~/.config/zellij/plugins/zellij-switch.wasm"
     zjstatus location="file:~/.config/zellij/plugins/zjstatus.wasm" {
         border_enabled "false"
         hide_frame_except_for_search "true"

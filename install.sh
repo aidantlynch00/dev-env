@@ -225,18 +225,14 @@ fi
 
 # install zellij
 if [ $install_zellij = 0 ]; then
-    echo "Installing zellij..."
+    echo "Installing zellij and plugins..."
     install_tar \
         "https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz" \
         "zellij" \
         "/usr/bin/"
-fi
 
-if [ $install_zellij_config = 0 ]; then
-    # install zellij config, layouts, plugins and themes
-    echo "Installing zellij config, layouts, plugins, and themes..."
-    cp -r ./.config/zellij $USER_HOME/.config/
-    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/zellij
+    chmod 755 /usr/bin/zellij
+    chown "$USER:$USER" /usr/bin/zellij
 
     # create plugins directory
     PLUGIN_DIR="$USER_HOME/.config/zellij/plugins"
@@ -248,8 +244,20 @@ if [ $install_zellij_config = 0 ]; then
         --output-document=$ZJSTATUS_FILE
     chmod +x $ZJSTATUS_FILE
 
+    ZJSWITCH_FILE="$PLUGIN_DIR/zellij-switch.wasm"
+    wget --quiet "https://github.com/mostafaqanbaryan/zellij-switch/releases/latest/download/zellij-switch.wasm" \
+        --output-document=$ZJSWITCH_FILE
+    chmod +x $ZJSWITCH_FILE
+
     # make sure plugins directory is owned by user
     chown -R "$REAL_USER:$REAL_USER" $PLUGIN_DIR
+fi
+
+if [ $install_zellij_config = 0 ]; then
+    # install zellij config, layouts and themes
+    echo "Installing zellij config, layouts and themes..."
+    cp -r ./.config/zellij $USER_HOME/.config/
+    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/zellij
 
     # install zellij bash script
     mkdir -p $USER_HOME/.bashrc.d
