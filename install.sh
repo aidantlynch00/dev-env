@@ -170,8 +170,9 @@ if [ $install_ghostty = 0 ]; then
 
     # move appimage to standard path and make executable
     BIN_PATH="/usr/bin/ghostty"
-    mv "Ghostty-$GHOSTTY_VERSION-x86_64.AppImage" $BIN_PATH
+    mv -f "Ghostty-$GHOSTTY_VERSION-x86_64.AppImage" $BIN_PATH
     chmod 755 $BIN_PATH
+    chown "$USER:$USER" $BIN_PATH
 
     # download the ghostty icon for the desktop application
     ICON_PATH="/usr/share/icons/hicolor/256x256/apps/ghostty.png"
@@ -203,9 +204,13 @@ fi
 if [ $install_nvim = 0 ]; then
     # install neovim appimage
     echo "Installing neovim..."
-    wget --quiet "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
-    mv nvim.appimage /usr/bin/nvim
-    chmod 755 /usr/bin/nvim
+    wget --quiet "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage"
+
+    # move binary and make executable
+    BIN_PATH="/usr/bin/nvim"
+    mv -f nvim-linux-x86_64.appimage $BIN_PATH
+    chmod 755 $BIN_PATH
+    chown "$USER:$USER" $BIN_PATH
 fi
 
 if [ $install_nvim_config = 0 ]; then
@@ -231,8 +236,9 @@ if [ $install_zellij = 0 ]; then
         "zellij" \
         "/usr/bin/"
 
-    chmod 755 /usr/bin/zellij
-    chown "$USER:$USER" /usr/bin/zellij
+    BIN_PATH="/usr/bin/zellij"
+    chmod 755 $BIN_PATH
+    chown "$USER:$USER" $BIN_PATH
 
     # create plugins directory
     PLUGIN_DIR="$USER_HOME/.config/zellij/plugins"
