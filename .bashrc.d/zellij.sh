@@ -6,14 +6,96 @@ fi
 
 alias zj="zellij"
 
-fp() {
-    read -r id path layout < <(\
-        cat $ZELLIJ_PROJECT_FILE | \
-        tr "," " " | \
-        fzf --delimiter=" " \
-            --nth=1 \
-            --with-nth=1 \
-            --query="$1" \
+if [ "$ZELLIJ" = "0" ]; then
+    _zellij_switch_session() {
+        name=$1
+        path=$2
+        layout=$3
+
+        options="--session $name"
+        [ -n "$path" ] && [ -d "$path" ] && options="$options --cwd $path"
+        [ -n "$layout" ] && options="$options --layout $layout"
+
+        zellij pipe --plugin zellij-switch -- "$options"
+    }
+
+    _create_session() {
+        _zellij_switch_session $@
+    }
+
+    _attach_session() {
+        _zellij_switch_session $@
+    }
+else
+    _create_session() {
+        name=$1
+        path=$2
+        layout=$3
+
+        [ -n "$path" ] && [ -d "$path" ] && pushd $path &> /dev/null
+
+        if [ -n "$layout" ]; then
+            zellij --session "$name" --new-session-with-layout "$layout"
+        else
+            zellij --session "$name"
+        fi
+
+        [ -n "$path" ] && [ -d "$path" ] && popd &> /dev/null
+    }
+
+    _attach_session() {
+        name=$1
+
+        zellij attach "$name"
+    }
+fi
+
+_open_session() {
+    project=$1
+    name=$2
+    path=$3
+    layout=$4
+
+    # Attach to an existing project session if it exists and is running.
+    # If a session is dead it will be deleted and a new one will be started.
+    # Otherwise create a new one with the project ID as the session name.
+    session_state="dne"
+    session=$(zellij list-sessions --no-formatting 2> /dev/null | grep "$name")
+    if echo "$session" | grep -q "EXITED"; then
+        session_state="dead"
+    elif [ -n "$session" ]; then
+        session_state="active"
+    fi
+
+    case $session_state in
+        "dne")
+            if [ "$project" = "0" ]; then
+                _create_session "$name" "$path" "$layout"
+            fi
+            ;;
+        "dead")
+            if [ "$project" = "0" ]; then
+                zellij delete-session "$name" > /dev/null
+                _create_session "$name" "$path" "$layout"
+            else
+                _attach_session "$name"
+            fi
+            ;;
+        "active")
+            _attach_session "$name"
+            ;;
+    esac
+}
+
+zs() {
+    project_list=$(cat $ZELLIJ_PROJECT_FILE)
+    active_list=$(zellij list-sessions --no-formatting --short)
+
+    name=$(
+        printf "$project_list\n$active_list" |
+        cut --delimiter "," --fields "1" |
+        sort -u |
+        fzf --query="$1" \
             --no-multi \
             --cycle \
             --select-1 \
@@ -29,34 +111,18 @@ fp() {
             --color=pointer:#ff007c \
             --color=prompt:#2ac3de \
             --color=query:#c0caf5:regular \
-            --color=separator:#2ac3de \
+            --color=separator:#2ac3de
     )
 
-    if [ -n "$id" ]; then
-        pushd $path > /dev/null
-
-        # Attach to an existing project session if it exists and is running.
-        # If a session is dead it will be deleted and a new one will be started.
-        # Otherwise create a new one with the project ID as the session name.
-        new_session=1
-        session=$(zellij list-sessions 2> /dev/null | grep "$id")
-        if [ -z "$session" ]; then
-            new_session=0
-        elif echo "$session" | grep -q "EXITED"; then
-            new_session=0
-            zellij delete-session "$id" > /dev/null
-        fi
-
-        if [ $new_session -eq 1 ]; then
-            zellij attach "$id"
-        elif [ -n "$layout" ]; then
-            zellij --session "$id" --new-session-with-layout "$layout"
+    if [ -n "$name" ]; then
+        project_line=$(echo "$project_list" | grep "$name," | head -n1)
+        if [ -n "$project_line" ]; then
+            IFS="," read -r name path layout < <(echo "$project_line")
+            _open_session 0 $name $path $layout
         else
-            zellij --session "$id"
+            _open_session 1 $name
         fi
-
-        popd > /dev/null
     else
-        echo "No project selected!"
+        echo "No session selected!"
     fi
 }
