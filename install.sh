@@ -96,36 +96,62 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-# install files from a downloaded tar archive file
-install_tar () {
+check_bashrc() {
+    RC_DIR="$USER_HOME/.bashrc.d"
+    if ! [ -d $RC_DIR ]; then
+        mkdir $RC_DIR
+        chown "$REAL_USER:$REAL_USER" $RC_DIR
+    fi
+}
+
+cp_bin() {
+    target=$1
+    dest=$2
+    [ -n "$3" ] && user=$3 || user=$REAL_USER
+
+    cp -fT $target $dest
+    chmod 755 $dest
+    chown "$user:$user" $dest
+}
+
+cp_dir() {
+    target=$1
+    dest=$2
+    [ -n "$3" ] && user=$3 || user=$REAL_USER
+
+    cp -rfT $target $dest
+    chown -R "$user:$user" $dest
+}
+
+TMP_DIR="/tmp"
+download() {
     url=$1
-    target=$2
-    dest=$3
-    tar_file=$(basename $url)
+    filename=$(basename $url)
 
-    # create a temp directory to download to
-    mkdir -p /tmp/install_tar
-    pushd /tmp/install_tar > /dev/null
+    # download the file
+    file="$TMP_DIR/$filename"
+    wget --quiet --output-document="$file" "$url"
+    echo "$file"
+}
 
-    # download the tar file
-    wget --quiet --output-document="$tar_file" "$url"
+extract_tar() {
+    tar_file=$1
+    filename=$(basename $tar_file)
+
+    # create a temporary directory to extract to
+    tmp_dir=$(mktemp --tmpdir="$TMP_DIR" --directory "tar_XXXXXX")
 
     # extract the archive given the compression used
-    if echo "$tar_file" | grep -q ".tar.gz"; then
-        tar -xzf "$tar_file"
-    elif echo "$tar_file" | grep -q ".tar.xz"; then
-        tar -xJf "$tar_file"
+    if echo "$filename" | grep -q ".tar.gz"; then
+        tar --directory "$tmp_dir" -xzf "$tar_file"
+    elif echo "$filename" | grep -q ".tar.xz"; then
+        tar --directory "$tmp_dir" -xJf "$tar_file"
     else
-        tar -xf "$tar_file"
+        tar --directory "$tmp_dir" -xf "$tar_file"
     fi
 
-    # install the target file to the destination
-    mkdir -p "$dest"
-    mv -f $target "$dest"
-
-    # remove the temp directory
-    popd > /dev/null
-    rm -rf /tmp/install_tar
+    rm -f "$tar_file"
+    echo "$tmp_dir"
 }
 
 # install packages based on the package manager passed in
@@ -150,11 +176,12 @@ if [ $install_packages = 0 ]; then
     fi
 
     # install lazygit from precompiled binary
-    if ! [ -e /usr/bin/lazygit ]; then
-        install_tar \
-            "https://github.com/jesseduffield/lazygit/releases/download/v0.44.1/lazygit_0.44.1_Linux_x86_64.tar.gz" \
-            "lazygit" \
-            "/usr/bin/"
+    BIN_PATH="/usr/bin/lazygit"
+    if ! [ -e "$BIN_PATH" ]; then
+        release=$(download "https://github.com/jesseduffield/lazygit/releases/download/v0.44.1/lazygit_0.44.1_Linux_x86_64.tar.gz")
+        extract_dir=$(extract_tar $release)
+        cp_bin "$extract_dir/lazygit" "$BIN_PATH" "root"
+        rm -rf --preserve-root "$extract_dir"
     else
         echo "lazygit already installed!"
     fi
@@ -164,20 +191,18 @@ fi
 if [ $install_ghostty = 0 ]; then
     echo "Installing ghostty..."
 
-    # install latest ghostty appimage, note: this is an unofficial build of ghostty
     GHOSTTY_VERSION="1.1.2"
-    wget --quiet "https://github.com/psadi/ghostty-appimage/releases/download/v$GHOSTTY_VERSION/Ghostty-$GHOSTTY_VERSION-x86_64.AppImage"
-
-    # move appimage to standard path and make executable
     BIN_PATH="/usr/bin/ghostty"
-    mv -f "Ghostty-$GHOSTTY_VERSION-x86_64.AppImage" $BIN_PATH
-    chmod 755 $BIN_PATH
-    chown "$USER:$USER" $BIN_PATH
+    ICON_PATH="/usr/share/icons/hicolor/256x256/apps/ghostty.png"
+
+    # install latest ghostty appimage, note: this is an unofficial build of ghostty
+    release=$(download "https://github.com/psadi/ghostty-appimage/releases/download/v$GHOSTTY_VERSION/Ghostty-$GHOSTTY_VERSION-x86_64.AppImage")
+    cp_bin "$release" "$BIN_PATH" "root"
+    rm -f "$release"
 
     # download the ghostty icon for the desktop application
-    ICON_PATH="/usr/share/icons/hicolor/256x256/apps/ghostty.png"
-    wget --quiet "https://raw.githubusercontent.com/ghostty-org/ghostty/main/images/icons/icon_256.png" \
-        --output-document=$ICON_PATH
+    icon=$(download "https://raw.githubusercontent.com/ghostty-org/ghostty/main/images/icons/icon_256.png")
+    mv -f "$icon" "$ICON_PATH"
 
     # create a .desktop file for ghostty
     cat > /usr/share/applications/ghostty.desktop << EOF
@@ -194,82 +219,70 @@ fi
 # install ghostty config and themes
 if [ $install_ghostty_config = 0 ]; then
     echo "Installing ghostty config and themes..."
-
-    # install ghostty config directory
-    cp -r ./.config/ghostty $USER_HOME/.config/
-    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/ghostty
+    cp_dir "./.config/ghostty" "$USER_HOME/.config/ghostty"
 fi
 
 # install neovim
 if [ $install_nvim = 0 ]; then
     # install neovim appimage
     echo "Installing neovim..."
-    wget --quiet "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage"
 
-    # move binary and make executable
+    # download AppImage, move and make executable
     BIN_PATH="/usr/bin/nvim"
-    mv -f nvim-linux-x86_64.appimage $BIN_PATH
-    chmod 755 $BIN_PATH
-    chown "$USER:$USER" $BIN_PATH
+    release=$(download "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage")
+    cp_bin "$release" "$BIN_PATH" "root"
+    rm -f "$release"
 fi
 
 if [ $install_nvim_config = 0 ]; then
     # install neovim config
     echo "Removing existing neovim config..."
-    rm -rf $USER_HOME/.config/nvim
+    rm -rf "$USER_HOME/.config/nvim"
+
     echo "Installing neovim config..."
-    cp -r ./.config/nvim $USER_HOME/.config/
-    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/nvim
+    cp_dir "./.config/nvim" "$USER_HOME/.config/nvim"
 
     # install neovim bash environment
-    mkdir -p $USER_HOME/.bashrc.d
-    cp ./.bashrc.d/nvim.sh $USER_HOME/.bashrc.d/
-    chmod +x $USER_HOME/.bashrc.d/nvim.sh
-    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
+    check_bashrc
+    cp_bin "./.bashrc.d/nvim.sh" "$USER_HOME/.bashrc.d/nvim.sh"
 fi
 
 # install zellij
 if [ $install_zellij = 0 ]; then
     echo "Installing zellij and plugins..."
-    install_tar \
-        "https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz" \
-        "zellij" \
-        "/usr/bin/"
 
-    BIN_PATH="/usr/bin/zellij"
-    chmod 755 $BIN_PATH
-    chown "$USER:$USER" $BIN_PATH
+    release=$(download "https://github.com/zellij-org/zellij/releases/latest/download/zellij-x86_64-unknown-linux-musl.tar.gz")
+    extract_dir=$(extract_tar $release)
+    cp_bin "$extract_dir/zellij" "/usr/bin/zellij" "root"
+    rm -rf --preserve-root "$extract_dir"
 
     # create plugins directory
     PLUGIN_DIR="$USER_HOME/.config/zellij/plugins"
-    mkdir -p $PLUGIN_DIR
+    if ! [ -e "$PLUGIN_DIR" ] || ! [ -d "$PLUGIN_DIR" ]; then
+        mkdir -p "$PLUGIN_DIR"
+        chown "$REAL_USER:$REAL_USER" "$PLUGIN_DIR"
+    fi
 
     # install plugins
-    ZJSTATUS_FILE="$PLUGIN_DIR/zjstatus.wasm"
-    wget --quiet "https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" \
-        --output-document=$ZJSTATUS_FILE
-    chmod +x $ZJSTATUS_FILE
-
-    ZJSWITCH_FILE="$PLUGIN_DIR/zellij-switch.wasm"
-    wget --quiet "https://github.com/mostafaqanbaryan/zellij-switch/releases/latest/download/zellij-switch.wasm" \
-        --output-document=$ZJSWITCH_FILE
-    chmod +x $ZJSWITCH_FILE
-
-    # make sure plugins directory is owned by user
-    chown -R "$REAL_USER:$REAL_USER" $PLUGIN_DIR
+    while read -r url; do
+        plugin=$(download "$url")
+        file="$PLUGIN_DIR/$(basename $plugin)"
+        cp_bin "$plugin" "$file"
+        rm -f "$plugin"
+    done << EOF
+https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm
+https://github.com/mostafaqanbaryan/zellij-switch/releases/latest/download/zellij-switch.wasm
+EOF
 fi
 
 if [ $install_zellij_config = 0 ]; then
     # install zellij config, layouts and themes
     echo "Installing zellij config, layouts and themes..."
-    cp -r ./.config/zellij $USER_HOME/.config/
-    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/zellij
+    cp_dir "./.config/zellij" "$USER_HOME/.config/zellij"
 
     # install zellij bash script
-    mkdir -p $USER_HOME/.bashrc.d
-    cp ./.bashrc.d/zellij.sh $USER_HOME/.bashrc.d/
-    chmod +x $USER_HOME/.bashrc.d/zellij.sh
-    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
+    check_bashrc
+    cp_bin "./.bashrc.d/zellij.sh" "$USER_HOME/.bashrc.d/zellij.sh"
 fi
 
 if [ $install_starship = 0 ]; then
@@ -279,22 +292,23 @@ if [ $install_starship = 0 ]; then
         sh -s -- --bin-dir /usr/bin/ --force > /dev/null 2>&1
 
     # install bash script
-    cp ./.bashrc.d/starship.sh $USER_HOME/.bashrc.d/
-    chmod +x $USER_HOME/.bashrc.d/starship.sh
-    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.bashrc.d
+    check_bashrc
+    cp_bin "./.bashrc.d/starship.sh" "$USER_HOME/.bashrc.d/starship.sh"
 
     # install starship configs
-    cp -r ./.config/starship $USER_HOME/.config/
-    chown -R "$REAL_USER:$REAL_USER" $USER_HOME/.config/starship
+    cp_dir "./.config/starship" "$USER_HOME/.config/starship"
 fi
 
 # install Hack nerd font
 if [ $install_nerd_font = 0 ]; then
     if ! [ -d /usr/share/fonts/hack-nerd ]; then
-        install_tar \
-            "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.tar.xz" \
-            "*.ttf" \
-            "/usr/share/fonts/hack-nerd"
+        FONT_FOLDER="/usr/share/fonts/hack-nerd"
+        file=$(download "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.tar.xz")
+        fonts=$(extract_tar $file)
+        mkdir -p "$FONT_FOLDER"
+        rm "$fonts"/*.md
+        cp_dir "$fonts" "$FONT_FOLDER" "root"
+        rm -rf --preserve-root "$fonts"
     else
         echo "Hack nerd font already installed!"
     fi
