@@ -11,6 +11,7 @@ fi
 
 # flags for installation options
 install_packages=1
+install_scripts=1
 install_ghostty=1
 install_ghostty_config=1
 install_nvim=1
@@ -45,6 +46,9 @@ while [ "$#" -gt 0 ]; do
             install_packages=0
             get_package_manager=0
             ;;
+        --scripts)
+            install_scripts=0
+            ;;
         --ghostty)
             install_ghostty=0
             ;;
@@ -71,6 +75,7 @@ while [ "$#" -gt 0 ]; do
             ;;
         --all)
             install_packages=0
+            install_scripts=0
             install_ghostty=0
             install_ghostty_config=0
             install_nvim=0
@@ -185,6 +190,17 @@ if [ $install_packages = 0 ]; then
     else
         echo "lazygit already installed!"
     fi
+fi
+
+if [ $install_scripts = 0 ]; then
+    echo "Installing scripts..."
+
+    SCRIPTS_DIR="/usr/bin/scripts"
+    mkdir -p "$SCRIPTS_DIR"
+    for script in ./scripts/*; do
+        filename=$(basename "$script")
+        cp_bin "$script" "$SCRIPTS_DIR/$filename" "root"
+    done
 fi
 
 # install ghostty
