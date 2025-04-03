@@ -201,6 +201,9 @@ if [ $install_scripts = 0 ]; then
         filename=$(basename "$script")
         cp_bin "$script" "$SCRIPTS_DIR/$filename" "root"
     done
+
+    check_bashrc
+    cp_bin "./.bashrc.d/scripts.sh" "$USER_HOME/.bashrc.d/scripts.sh"
 fi
 
 # install ghostty

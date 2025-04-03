@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if [ "$ZELLIJ" = "0" ]; then
+    /usr/bin/scripts/zellij_switch_session $@
+else
+    name=$1
+    path=$2
+    layout=$3
+
+    if [ -z "$name" ]; then
+        echo "Session name required!" 2>&1
+        exit 1
+    fi
+
+    # enter directory if provided and it exists
+    if [ -n "$path" ] && [ -d "$path" ]; then
+        pushd $path &> /dev/null
+    fi
+
+    if [ -n "$layout" ]; then
+        zellij --session "$name" --new-session-with-layout "$layout"
+    else
+        zellij --session "$name"
+    fi
+
+    # exit directory
+    if [ -n "$path" ] && [ -d "$path" ]; then
+        popd &> /dev/null
+    fi
+fi

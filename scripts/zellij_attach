@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ "$ZELLIJ" = "0" ]; then
+    /usr/bin/scripts/zellij_switch_session $@
+else
+    name=$1
+
+    if [ -z "$name" ]; then
+        echo "Session name required!" 2>&1
+        exit 1
+    fi
+
+    zellij attach "$name"
+fi

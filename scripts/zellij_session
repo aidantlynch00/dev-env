@@ -1,0 +1,81 @@
+#!/bin/sh
+
+ZELLIJ_PROJECT_FILE="$HOME/.zellij_projects.csv"
+if ! [ -f $ZELLIJ_PROJECT_FILE ]; then
+    touch $ZELLIJ_PROJECT_FILE
+fi
+
+project_list=$(cat $ZELLIJ_PROJECT_FILE)
+active_list=$(zellij list-sessions --no-formatting --short)
+
+selected=$(
+    printf "$project_list\n$active_list" |
+    cut --delimiter "," --fields "1" |
+    sort -u |
+    fzf --query="$1" \
+        --no-multi \
+        --cycle \
+        --select-1 \
+        --height=7 \
+        --layout=reverse \
+        --color=fg:#c0caf5 \
+        --color=gutter:-1 \
+        --color=header:#ff9e64 \
+        --color=hl+:#2ac3de \
+        --color=hl:#2ac3de \
+        --color=info:#545c7e \
+        --color=marker:#ff007c \
+        --color=pointer:#ff007c \
+        --color=prompt:#2ac3de \
+        --color=query:#c0caf5:regular \
+        --color=separator:#2ac3de
+)
+
+if [ -z "$selected" ]; then
+    echo "No session selected!" 2>&1
+    exit 1
+fi
+
+name="$selected"
+path=""
+layout=""
+project=1
+while IFS="," read -r project_name project_path project_layout; do
+    if [ "$selected" = "$project_name" ]; then
+        name=$project_name
+        path=$project_path
+        layout=$project_layout
+        project=0
+        break
+    fi
+done < $ZELLIJ_PROJECT_FILE
+
+# Attach to an existing project session if it exists and is running.
+# If a session is dead it will be deleted and a new one will be started.
+# Otherwise create a new one with the project ID as the session name.
+session_state="dne"
+session=$(zellij list-sessions --no-formatting 2> /dev/null | grep "$name")
+if echo "$session" | grep -q "EXITED"; then
+    session_state="dead"
+elif [ -n "$session" ]; then
+    session_state="active"
+fi
+
+case $session_state in
+    "dne")
+        if [ $project = 0 ]; then
+            /usr/bin/scripts/zellij_create "$name" "$path" "$layout"
+        fi
+        ;;
+    "dead")
+        if [ $project = 0 ]; then
+            zellij delete-session "$name" > /dev/null
+            /usr/bin/scripts/zellij_create "$name" "$path" "$layout"
+        else
+            /usr/bin/scripts/zellij_attach "$name"
+        fi
+        ;;
+    "active")
+        /usr/bin/scripts/zellij_attach "$name"
+        ;;
+esac
