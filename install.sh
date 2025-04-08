@@ -195,11 +195,11 @@ fi
 if [ $install_scripts = 0 ]; then
     echo "Installing scripts..."
 
-    SCRIPTS_DIR="/usr/bin/scripts"
-    mkdir -p "$SCRIPTS_DIR"
+    DEV_SCRIPTS_DIR="/usr/bin/scripts"
+    mkdir -p "$DEV_SCRIPTS_DIR"
     for script in ./scripts/*; do
         filename=$(basename "$script")
-        cp_bin "$script" "$SCRIPTS_DIR/$filename" "root"
+        cp_bin "$script" "$DEV_SCRIPTS_DIR/$filename" "root"
     done
 
     check_bashrc

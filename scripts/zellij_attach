@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "$ZELLIJ" = "0" ]; then
-    /usr/bin/scripts/zellij_switch_session $@
+    $DEV_SCRIPTS_DIR/zellij_switch_session $@
 else
     name=$1
 

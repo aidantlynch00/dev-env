@@ -64,18 +64,18 @@ fi
 case $session_state in
     "dne")
         if [ $project = 0 ]; then
-            /usr/bin/scripts/zellij_create "$name" "$path" "$layout"
+            $DEV_SCRIPTS_DIR/zellij_create "$name" "$path" "$layout"
         fi
         ;;
     "dead")
         if [ $project = 0 ]; then
             zellij delete-session "$name" > /dev/null
-            /usr/bin/scripts/zellij_create "$name" "$path" "$layout"
+            $DEV_SCRIPTS_DIR/zellij_create "$name" "$path" "$layout"
         else
-            /usr/bin/scripts/zellij_attach "$name"
+            $DEV_SCRIPTS_DIR/zellij_attach "$name"
         fi
         ;;
     "active")
-        /usr/bin/scripts/zellij_attach "$name"
+        $DEV_SCRIPTS_DIR/zellij_attach "$name"
         ;;
 esac
