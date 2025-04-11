@@ -5,30 +5,54 @@ if ! [ -f $ZELLIJ_PROJECT_FILE ]; then
     touch $ZELLIJ_PROJECT_FILE
 fi
 
-project_list=$(cat $ZELLIJ_PROJECT_FILE)
-active_list=$(zellij list-sessions --no-formatting --short)
+projects_command="
+    cat $ZELLIJ_PROJECT_FILE |\
+    cut --delimiter ',' --fields '1'\
+"
+
+active_command="
+    zellij list-sessions --no-formatting |\
+    grep --invert-match 'EXITED' |\
+    cut --delimiter ' ' --fields '1'\
+"
+
+dead_command="
+    zellij list-sessions --no-formatting |\
+    grep 'EXITED' |\
+    cut --delimiter ' ' --fields '1'\
+"
+
+combined_command="{ $projects_command; $active_command; $dead_command; }"
+sort_command="sort --unique"
+
+projects_bind="ctrl-p:reload($projects_command | $sort_command)"
+active_bind="ctrl-a:reload($active_command | $sort_command)"
+dead_bind="ctrl-d:reload($dead_command | $sort_command)"
+combined_bind="ctrl-l:reload($combined_command | $sort_command)"
 
 selected=$(
-    printf "$project_list\n$active_list" |
-    cut --delimiter "," --fields "1" |
-    sort -u |
+    eval "$combined_command | $sort_command" |
     fzf --query="$1" \
+        --info=hidden \
+        --header="[L] All [P] Projects [A] Active [D] Dead" \
         --no-multi \
         --cycle \
         --select-1 \
+        --bind="$projects_bind" \
+        --bind="$active_bind" \
+        --bind="$dead_bind" \
+        --bind="$combined_bind" \
         --height=7 \
         --layout=reverse \
         --color=fg:#c0caf5 \
+        --color=fg+:#c0caf5 \
+        --color=bg+:#383e5a \
+        --color=prompt:#7aa2f7 \
+        --color=header:#7aa2f7 \
         --color=gutter:-1 \
-        --color=header:#ff9e64 \
-        --color=hl+:#2ac3de \
-        --color=hl:#2ac3de \
-        --color=info:#545c7e \
-        --color=marker:#ff007c \
-        --color=pointer:#ff007c \
-        --color=prompt:#2ac3de \
-        --color=query:#c0caf5:regular \
-        --color=separator:#2ac3de
+        --color=pointer:#7aa2f7 \
+        --color=hl:#e25c74 \
+        --color=hl+:#e25c74 \
 )
 
 if [ -z "$selected" ]; then
@@ -36,6 +60,7 @@ if [ -z "$selected" ]; then
     exit 1
 fi
 
+# Get project details if the selected session is in the projects file.
 name="$selected"
 path=""
 layout=""
@@ -50,9 +75,8 @@ while IFS="," read -r project_name project_path project_layout; do
     fi
 done < $ZELLIJ_PROJECT_FILE
 
-# Attach to an existing project session if it exists and is running.
-# If a session is dead it will be deleted and a new one will be started.
-# Otherwise create a new one with the project ID as the session name.
+# Determine whether the selected session is not running ("dne"), dead (exists
+# but not active), or active.
 session_state="dne"
 session=$(zellij list-sessions --no-formatting 2> /dev/null | grep "$name")
 if echo "$session" | grep -q "EXITED"; then
@@ -63,12 +87,16 @@ fi
 
 case $session_state in
     "dne")
+        # If the selected session is not in the projects file, there is no way
+        # it can appear in the list if it does not exist.
         if [ $project = 0 ]; then
             $DEV_SCRIPTS_DIR/zellij_create "$name" "$path" "$layout"
         fi
         ;;
     "dead")
         if [ $project = 0 ]; then
+            # If a project session is dead, delete it and create it again. There
+            # is no benefit to resurrecting a dead project session.
             zellij delete-session "$name" > /dev/null
             $DEV_SCRIPTS_DIR/zellij_create "$name" "$path" "$layout"
         else
