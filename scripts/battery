@@ -1,8 +1,13 @@
 #!/bin/sh
 
-BAT_CAP_FILE=/sys/class/power_supply/BAT0/capacity
-if [ -e $BAT_CAP_FILE ]; then
-    capacity=$(cat $BAT_CAP_FILE)
+capacity_file=$(
+    find -L /sys/class/power_supply/ -maxdepth 2 -type f -path "*/BAT[0-9]/*" -iname "capacity" 2> /dev/null |
+    sort |
+    head -n1
+)
+
+if [ -n "$capacity_file" ]; then
+    capacity=$(cat "$capacity_file")
     red=$(tput setaf 1)
     green=$(tput setaf 2)
     yellow=$(tput setaf 3)
