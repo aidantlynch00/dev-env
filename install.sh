@@ -32,6 +32,7 @@ while [ "$#" -gt 0 ]; do
             echo "install.sh [OPTIONS]"
             echo "  --help                        show this message"
             echo "  --packages [package manager]  install dev packages uses the provided package manager (currently only dnf is supported)"
+            echo "  --scripts                     install custom scripts"
             echo "  --ghostty                     install ghostty"
             echo "  --ghostty-config              install ghostty configurations and themes"
             echo "  --nvim                        install neovim"
