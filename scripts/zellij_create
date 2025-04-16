@@ -14,7 +14,8 @@ else
 
     # enter directory if provided and it exists
     if [ -n "$path" ] && [ -d "$path" ]; then
-        pushd $path &> /dev/null
+        cwd=$(pwd)
+        cd "$path"
     fi
 
     if [ -n "$layout" ]; then
@@ -25,6 +26,6 @@ else
 
     # exit directory
     if [ -n "$path" ] && [ -d "$path" ]; then
-        popd &> /dev/null
+        cd "$cwd"
     fi
 fi
