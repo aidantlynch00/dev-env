@@ -3,6 +3,9 @@ require("neo-tree").setup {
         filtered_items = {
             visible = true,
             hide_gitignored = true,
+            never_show_by_pattern = {
+                "*/.git",
+            },
         },
     },
 }
