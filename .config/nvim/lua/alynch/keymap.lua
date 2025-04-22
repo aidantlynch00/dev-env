@@ -27,6 +27,7 @@ map("n", "<leader>fh", builtin.help_tags)
 map("n", "<leader>fw", builtin.grep_string)
 map("n", "<leader>fs", telescope.extensions.aerial.aerial)
 map("n", "<leader>fn", "<cmd>NoteTelescope<CR>")
+map("n", "<leader>tr", builtin.resume)
 
 -- set up harpoon mappings
 local harpoon = require("harpoon")
