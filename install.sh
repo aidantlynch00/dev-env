@@ -39,6 +39,7 @@ while [ "$#" -gt 0 ]; do
             echo "  --nvim-config                 install neovim configurations"
             echo "  --zellij                      install zellij"
             echo "  --zellij-config               install zellij configurations, layouts, and themes"
+            echo "  --scripts                     install custom scripts"
             echo "  --nerd-font                   install the Hack nerd font"
             echo "  --all [package manager]       install everything"
             exit
