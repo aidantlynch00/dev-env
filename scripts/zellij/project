@@ -1,0 +1,65 @@
+#!/bin/sh
+
+ZELLIJ_PROJECT_FILE="$HOME/.zellij_projects.csv"
+if ! [ -f $ZELLIJ_PROJECT_FILE ]; then
+    touch $ZELLIJ_PROJECT_FILE
+fi
+
+_match_field() {
+    field="$1"
+    expected="$2"
+
+    while read -r project; do
+        actual=$(echo "$project" | cut --delimiter "," --field "$field")
+        if [ "$expected" = "$actual" ]; then
+            echo "$project"
+            break
+        fi
+    done < $ZELLIJ_PROJECT_FILE
+}
+
+match_name() {
+    _match_field 1 "$1"
+}
+
+match_path() {
+    _match_field 2 "$1"
+}
+
+session_state() {
+    name="$1"
+    state="dne"
+    session=$(zellij list-sessions --no-formatting 2> /dev/null | grep "$name \[")
+    if echo "$session" | grep -q "EXITED"; then
+        state="dead"
+    elif [ -n "$session" ]; then
+        state="active"
+    fi
+
+    echo "$state"
+}
+
+open_session() {
+    name="$1"
+    path="$2"
+    layout="$3"
+
+    [ -n "$(match_name "$name")" ] && project=0 || project=1
+    state=$(session_state "$name")
+    case $state in
+        dne)
+            $DEV_SCRIPTS_DIR/zellij/create "$name" "$path" "$layout"
+            ;;
+        dead)
+            if [ "$project" = "0" ]; then
+                zellij delete-session "$name" > /dev/null
+                $DEV_SCRIPTS_DIR/zellij/create "$name" "$path" "$layout"
+            else
+                $DEV_SCRIPTS_DIR/zellij/attach "$name"
+            fi
+            ;;
+        active)
+            $DEV_SCRIPTS_DIR/zellij/attach "$name"
+            ;;
+    esac
+}

@@ -1,17 +1,17 @@
 #!/bin/sh
 
+name=$1
+path=$2
+layout=$3
+
+if [ -z "$name" ]; then
+    echo "Session name required!" 2>&1
+    exit 1
+fi
+
 if [ "$ZELLIJ" = "0" ]; then
-    $DEV_SCRIPTS_DIR/zellij_switch_session $@
+    $DEV_SCRIPTS_DIR/zellij/switch "$name" "$path" "$layout"
 else
-    name=$1
-    path=$2
-    layout=$3
-
-    if [ -z "$name" ]; then
-        echo "Session name required!" 2>&1
-        exit 1
-    fi
-
     # enter directory if provided and it exists
     if [ -n "$path" ] && [ -d "$path" ]; then
         cwd=$(pwd)

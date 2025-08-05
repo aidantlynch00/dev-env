@@ -198,10 +198,14 @@ if [ $install_scripts = 0 ]; then
     echo "Installing scripts..."
 
     DEV_SCRIPTS_DIR="/usr/bin/scripts"
-    mkdir -p "$DEV_SCRIPTS_DIR"
-    for script in ./scripts/*; do
+    SOURCE_SCRIPTS_DIR="./scripts"
+    scripts=$(find "$SOURCE_SCRIPTS_DIR" -type f | sed "s;^${SOURCE_SCRIPTS_DIR}/;;")
+    for script in $scripts; do
+        dir=$(dirname "$script")
+        mkdir -p "$DEV_SCRIPTS_DIR/$dir"
+
         filename=$(basename "$script")
-        cp_bin "$script" "$DEV_SCRIPTS_DIR/$filename" "root"
+        cp_bin "$SOURCE_SCRIPTS_DIR/$script" "$DEV_SCRIPTS_DIR/$script" "root"
     done
 
     check_bashrc

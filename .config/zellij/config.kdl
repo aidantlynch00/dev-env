@@ -111,14 +111,27 @@ keybinds clear-defaults=true {
         bind "Alt k" "Alt Up" { MoveFocus "Up"; }
         bind "Alt z" {
             SwitchToMode "Normal";
-            Run "/usr/bin/scripts/zellij_session" {
+            Run "/usr/bin/scripts/zellij/session" {
                 floating true
                 pinned true
                 close_on_exit true
                 name ""
                 width "100%"
                 height "9"
-                x "85%"
+                x "80%"
+                y "0"
+            };
+        }
+        bind "Alt w" {
+            SwitchToMode "Normal";
+            Run "/usr/bin/scripts/zellij/worktree" {
+                floating true
+                pinned true
+                close_on_exit true
+                name ""
+                width "100%"
+                height "9"
+                x "90%"
                 y "0"
             };
         }

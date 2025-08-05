@@ -1,0 +1,43 @@
+#!/bin/sh
+source "$DEV_SCRIPTS_DIR/zellij/project"
+
+if ! git rev-parse --show-toplevel &> /dev/null; then
+    echo "Not in a git repo!" 2>&1
+    exit 1
+fi
+
+worktrees=$(
+    git worktree list --porcelain |
+    awk -F" " '/^worktree/ {
+        printf "%s,", $2;
+        getline; getline;
+        sub(/refs\/heads\//, "", $2);
+        printf "%s\n", $2;
+    }'
+)
+
+if [ "$(echo "$worktrees" | wc -l)" = "1" ]; then
+    echo "Only the main worktree exists!" 2>&1
+    exit 1
+fi
+
+main_worktree=$(echo "$worktrees" | head -n1)
+main_path=$(echo "$main_worktree" | cut --delimiter "," --fields "1")
+repo=$(basename "$main_path")
+
+selected=$(
+    echo "$worktrees" |
+    cut --delimiter "," --fields "2" |
+    $DEV_SCRIPTS_DIR/zellij/picker "$1" \
+        --header="Worktrees" \
+)
+
+if [ -z "$selected" ]; then
+    echo "No worktree selected!" 2>&1
+    exit 1
+fi
+
+path=$(echo "$worktrees" | sed -n "s;^\(.*\),${selected}$;\1;p")
+[ "$path" = "$main_path" ] && name="$repo" || name="${repo}_${selected}"
+IFS="," read -r _ _ layout < <(match_path "$main_path")
+open_session "$name" "$path" "$layout"

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+name=$1
+if [ -z "$name" ]; then
+    echo "Session name required!" 2>&1
+    exit 1
+fi
+
+if [ "$ZELLIJ" = "0" ]; then
+    $DEV_SCRIPTS_DIR/zellij/switch "$name"
+else
+    zellij attach "$name"
+fi
