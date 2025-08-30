@@ -3,7 +3,10 @@ local lang_servers = { "rust_analyzer", "clangd", "lua_ls", "bashls", "ts_ls", "
 require("mason").setup()
 require("mason-lspconfig").setup {
     ensure_installed = lang_servers,
-    automatic_installation = true
+    automatic_installation = true,
+    automatic_enable = {
+        exclude = { "luals" }
+    },
 }
 
 -- configure coq
@@ -19,6 +22,7 @@ vim.g.coq_settings = {
 -- disable LSP diagnostic underlines
 local diagnostic_opts = {
     underline = false,
+    virtual_text = true,
 }
 
 vim.diagnostic.config(diagnostic_opts)
