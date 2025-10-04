@@ -32,12 +32,11 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     diagnostic_opts
 )
 
-local lsp = require("lspconfig")
 local coq = require("coq")
 for _, lang_server in pairs(lang_servers) do
-    lsp[lang_server].setup(coq.lsp_ensure_capabilities({
+    vim.lsp.config[lang_server] = coq.lsp_ensure_capabilities({
         settings = diagnostic_opts
-    }))
+    })
 end
 
 vim.cmd("COQnow -s")
