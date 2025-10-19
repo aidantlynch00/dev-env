@@ -34,6 +34,7 @@ selected=$(
         --bind="$active_bind" \
         --bind="$dead_bind" \
         --bind="$combined_bind" \
+        --select-1 \
 )
 
 if [ -z "$selected" ]; then

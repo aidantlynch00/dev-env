@@ -1,0 +1,32 @@
+#!/bin/sh
+source "$DEV_SCRIPTS_DIR/zellij/project"
+
+root=$(git rev-parse --show-toplevel)
+
+if ! [ "$?" = "0" ]; then
+    echo "Not in a git repo" 2>&1
+    exit 1
+fi
+
+submodules=$(git submodule | awk '{ print $2 }')
+
+if [ "$(echo "$submodules" | wc -l)" = "0" ]; then
+    "No submodules!" 2>&1
+    exit 1
+fi
+
+selected=$(
+    echo "$submodules" |
+    $DEV_SCRIPTS_DIR/zellij/picker "$1" \
+        --header="Submodules" \
+)
+
+if [ -z "$selected" ]; then
+    echo "No submodule selected!" 2>&1
+    exit 1
+fi
+
+path="$root/$selected"
+IFS="," read -r name _ layout < <(match_path "$path")
+[ -z "$name" ] && name="$selected"
+open_session "$name" "$path" "$layout"

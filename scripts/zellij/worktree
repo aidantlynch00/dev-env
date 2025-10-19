@@ -30,6 +30,7 @@ selected=$(
     cut --delimiter "," --fields "2" |
     $DEV_SCRIPTS_DIR/zellij/picker "$1" \
         --header="Worktrees" \
+        --select-1 \
 )
 
 if [ -z "$selected" ]; then

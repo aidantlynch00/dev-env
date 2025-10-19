@@ -7,7 +7,6 @@ fzf --query="$query" \
     --info=hidden \
     --no-multi \
     --cycle \
-    --select-1 \
     --height=7 \
     --layout=reverse \
     --color=fg:#c0caf5 \
