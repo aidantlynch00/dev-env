@@ -326,8 +326,8 @@ fi
 
 # install Hack nerd font
 if [ $install_nerd_font = 0 ]; then
-    if ! [ -d /usr/share/fonts/hack-nerd ]; then
-        FONT_FOLDER="/usr/share/fonts/hack-nerd"
+    FONT_FOLDER="$USER_HOME/.local/share/fonts/hack-nerd"
+    if ! [ -d "$FONT_FOLDER" ]; then
         file=$(download "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.tar.xz")
         fonts=$(extract_tar $file)
         mkdir -p "$FONT_FOLDER"
