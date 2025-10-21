@@ -1,3 +1,0 @@
-# .bashrc
-
-alias zj="zellij"
