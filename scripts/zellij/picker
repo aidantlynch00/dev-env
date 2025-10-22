@@ -5,6 +5,7 @@ shift
 
 fzf --query="$query" \
     --info=hidden \
+    --no-separator \
     --no-multi \
     --cycle \
     --height=7 \
