@@ -7,13 +7,13 @@ projects_command="
 "
 
 active_command="
-    zellij list-sessions --no-formatting |\
+    zellij list-sessions --no-formatting 2> /dev/null |\
     grep --invert-match 'EXITED' |\
     cut --delimiter ' ' --fields '1'\
 "
 
 dead_command="
-    zellij list-sessions --no-formatting |\
+    zellij list-sessions --no-formatting 2> /dev/null |\
     grep 'EXITED' |\
     cut --delimiter ' ' --fields '1'\
 "
