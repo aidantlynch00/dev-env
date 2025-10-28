@@ -8,6 +8,7 @@ local require_configs = function()
     require("alynch.plugins.aerial")
     require("alynch.plugins.neotree")
     require("alynch.plugins.lualine")
+    require("alynch.plugins.obsidian")
 end
 
 local bootstrap_packer = function()
@@ -27,7 +28,10 @@ return require("packer").startup(function(use)
 	use "wbthomason/packer.nvim"
     use "nvim-lua/plenary.nvim"
 
+    -- notes
     use "kkharji/sqlite.lua"
+    use "obsidian-nvim/obsidian.nvim"
+
     use {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v3.x",
@@ -37,6 +41,7 @@ return require("packer").startup(function(use)
             "MunifTanjim/nui.nvim"
         }
     }
+
 
     use "tpope/vim-surround"
     use "tpope/vim-repeat"
