@@ -1,9 +1,3 @@
-require("code_annotate").setup {
-    annot_sign = "󰎛",
-    width = 40,
-    height = 25,
-}
-
 local wrapped_list = function(start, count)
     local list = {}
     for num = start + 1, count do

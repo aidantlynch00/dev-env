@@ -40,10 +40,6 @@ end
 
 map("n", "<leader>mda", function() harpoon:list():clear() end)
 
--- annotations
-map("n", "<leader>no", "<cmd>NoteCreate<CR>")
-map("n", "<leader>nd", "<cmd>NoteDelete<CR>")
-
 -- set up LSP mappings
 map("n", "<leader>h", "<cmd>lua vim.lsp.buf.hover()<CR>")
 map("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
