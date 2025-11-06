@@ -1,5 +1,6 @@
 {
     "$schema": "https://opencode.ai/config.json",
+    "autoupdate": false,
     "theme": "tokyonight",
     "model": "openrouter/deepseek/deepseek-chat-v3.1:free",
     "small_model": "qwen/qwen-2.5-coder-32b-instruct:free",
