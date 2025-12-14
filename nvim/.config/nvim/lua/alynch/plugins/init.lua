@@ -30,6 +30,7 @@ return require("packer").startup(function(use)
 
     -- notes
     use "kkharji/sqlite.lua"
+    use "MeanderingProgrammer/render-markdown.nvim"
     use "obsidian-nvim/obsidian.nvim"
 
     use {
