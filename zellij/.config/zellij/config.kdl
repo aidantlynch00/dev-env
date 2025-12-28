@@ -98,10 +98,9 @@ keybinds clear-defaults=true {
                 pinned true
                 close_on_exit true
                 name ""
-                width "100%"
+                width "30%"
                 height "9"
-                x "85%"
-                y "0"
+                x "35%"
             };
         }
         bind "a" {
@@ -111,10 +110,9 @@ keybinds clear-defaults=true {
                 pinned true
                 close_on_exit true
                 name ""
-                width "100%"
+                width "30%"
                 height "9"
-                x "85%"
-                y "0"
+                x "35%"
             };
         }
         bind "d" {
@@ -124,10 +122,9 @@ keybinds clear-defaults=true {
                 pinned true
                 close_on_exit true
                 name ""
-                width "100%"
+                width "30%"
                 height "9"
-                x "85%"
-                y "0"
+                x "35%"
             };
         }
         bind "p" {
@@ -137,10 +134,9 @@ keybinds clear-defaults=true {
                 pinned true
                 close_on_exit true
                 name ""
-                width "100%"
+                width "30%"
                 height "9"
-                x "85%"
-                y "0"
+                x "35%"
             };
         }
         bind "w" {
@@ -150,10 +146,9 @@ keybinds clear-defaults=true {
                 pinned true
                 close_on_exit true
                 name ""
-                width "100%"
+                width "30%"
                 height "9"
-                x "80%"
-                y "0"
+                x "35%"
             };
         }
         bind "s" {
@@ -163,10 +158,9 @@ keybinds clear-defaults=true {
                 pinned true
                 close_on_exit true
                 name ""
-                width "100%"
+                width "30%"
                 height "9"
-                x "85%"
-                y "0"
+                x "35%"
             };
         }
     }
