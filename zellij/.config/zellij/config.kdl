@@ -93,7 +93,7 @@ keybinds clear-defaults=true {
     session {
         bind "z" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/scripts/bash/zestty-pick zellij" {
+            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick zellij" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -106,7 +106,7 @@ keybinds clear-defaults=true {
         }
         bind "a" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/scripts/bash/zestty-pick active" {
+            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick active" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -119,7 +119,7 @@ keybinds clear-defaults=true {
         }
         bind "d" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/scripts/bash/zestty-pick dead" {
+            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick dead" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -132,7 +132,7 @@ keybinds clear-defaults=true {
         }
         bind "p" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/scripts/bash/zestty-pick projects" {
+            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick projects" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -145,7 +145,7 @@ keybinds clear-defaults=true {
         }
         bind "w" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/scripts/bash/zestty-pick worktrees" {
+            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick worktrees" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -158,7 +158,7 @@ keybinds clear-defaults=true {
         }
         bind "s" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/scripts/bash/zestty-pick submodules" {
+            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick submodules" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -238,7 +238,7 @@ plugins {
         tab_normal "#[fg=$normal_tab_bg]#[fg=$dark_text,bg=$normal_tab_bg]{name}#[fg=$normal_tab_bg]"
         tab_active "#[fg=$active_tab_bg]#[fg=$dark_text,bg=$active_tab_bg]{name}#[fg=$active_tab_bg]"
 
-        command_battery_command "sh -c \"~/.tool-bin/scripts/bash/battery\""
+        command_battery_command "sh -c \"~/.tool-bin/shell/bash/battery\""
         command_battery_format "#[fg=$widget2_bg]#[fg=$light_text,bg=$widget2_bg]{stdout}#[fg=$widget2_bg]"
         command_battery_interval "60"
         command_battery_rendermode "static"
