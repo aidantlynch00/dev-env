@@ -1,0 +1,16 @@
+[user]
+    name = Aidan Lynch
+    email = aidantlynch00@gmail.com
+
+[diff]
+    external = difft
+    tool = difft
+
+[difftool]
+    prompt = false
+
+[difftool "difft"]
+    cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
+
+[pager]
+    difftool = true
