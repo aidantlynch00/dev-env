@@ -93,7 +93,7 @@ keybinds clear-defaults=true {
     session {
         bind "z" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick zellij" {
+            Run "sh" "-c" "~/.tool-bin/current/bin/zestty pick zellij" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -105,7 +105,7 @@ keybinds clear-defaults=true {
         }
         bind "a" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick active" {
+            Run "sh" "-c" "~/.tool-bin/current/bin/zestty pick active" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -117,7 +117,7 @@ keybinds clear-defaults=true {
         }
         bind "d" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick dead" {
+            Run "sh" "-c" "~/.tool-bin/current/bin/zestty pick dead" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -129,7 +129,7 @@ keybinds clear-defaults=true {
         }
         bind "p" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick projects" {
+            Run "sh" "-c" "~/.tool-bin/current/bin/zestty pick projects" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -141,7 +141,7 @@ keybinds clear-defaults=true {
         }
         bind "w" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick worktrees" {
+            Run "sh" "-c" "~/.tool-bin/current/bin/zestty pick worktrees" {
                 floating true
                 pinned true
                 close_on_exit true
@@ -153,7 +153,7 @@ keybinds clear-defaults=true {
         }
         bind "s" {
             SwitchToMode "Normal";
-            Run "sh" "-c" "~/.tool-bin/shell/bash/zestty-pick submodules" {
+            Run "sh" "-c" "~/.tool-bin/current/bin/zestty pick submodules" {
                 floating true
                 pinned true
                 close_on_exit true
