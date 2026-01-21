@@ -232,7 +232,7 @@ plugins {
         tab_normal "#[fg=$normal_tab_bg]#[fg=$dark_text,bg=$normal_tab_bg]{name}#[fg=$normal_tab_bg]"
         tab_active "#[fg=$active_tab_bg]#[fg=$dark_text,bg=$active_tab_bg]{name}#[fg=$active_tab_bg]"
 
-        command_battery_command "sh -c \"~/.tool-bin/shell/bash/battery\""
+        command_battery_command "sh -c \"~/.tool-bin/shell/bash/battery.sh\""
         command_battery_format "#[fg=$widget2_bg]#[fg=$light_text,bg=$widget2_bg]{stdout}#[fg=$widget2_bg]"
         command_battery_interval "60"
         command_battery_rendermode "static"
