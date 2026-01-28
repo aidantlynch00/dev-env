@@ -12,6 +12,14 @@ map({ "n", "v" }, "<leader>w", "<C-w>")
 map({ "n", "v" }, "<leader>w", "<C-w>")
 map({ "n", "v" }, "<leader>wf", FindFloatingInTab)
 
+-- quickfix list bindings
+map("n", "<leader>co", "<cmd>copen<CR>")
+map("n", "<leader>cc", "<cmd>cclose<CR>")
+map("n", "<leader>cn", "<cmd>cnext<CR>")
+map("n", "<leader>cp", "<cmd>cprev<CR>")
+map("n", "<leader>cN", "<cmd>cnewer<CR>")
+map("n", "<leader>cP", "<cmd>colder<CR>")
+
 -- set up Neotree binding
 map("n", "<leader>ls", NeotreeToggle)
 
