@@ -1,21 +1,20 @@
 ---
 description: Agent capable of finding external, project-relevant information on programming topics, documentation, and discussions.
 mode: subagent
-tools:
-    general: false
-    bash: false
-    edit: false
-    write: false
-    read: true
-    grep: true
-    glob: true
-    list: true
-    patch: false
-    todowrite: false
-    todoread: false
-    webfetch: true
-    context7*: true
-    brave*: true
+permission:
+    bash: deny
+    edit: deny
+    write: deny
+    read: allow
+    grep: allow
+    glob: allow
+    list: allow
+    patch: deny
+    todowrite: deny
+    todoread: deny
+    webfetch: allow
+    context7*: allow
+    brave*: allow
 ---
 # External Code Research Agent
 

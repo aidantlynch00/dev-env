@@ -31,19 +31,23 @@
     },
     "agent": {
         "plan": {
-            "tools": {
-                "context7*": true,
-                "brave_web_search": true
+            "permission": {
+                "context7*": "allow",
+                "brave_web_search": "allow"
             }
         },
         "build": {
-            "tools": {
-                "context7*": true,
+            "permission": {
+                "context7*": "allow",
             }
         }
     },
-    "tools": {
-        "context7*": false,
-        "brave*": false
+    "permission": {
+        "bash": "ask",
+        "context7*": "deny",
+        "brave*": "deny",
+        "websearch": "deny",
+        "codesearch": "deny",
+        "external_directory": "ask"
     }
 }

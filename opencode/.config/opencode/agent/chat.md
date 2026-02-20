@@ -1,22 +1,20 @@
 ---
 description: Generic chat agent
 mode: primary
-tools:
-    general: false
-    ext-code-research: true
-    bash: false
-    edit: false
-    write: false
-    read: false
-    grep: false
-    glob: false
-    list: false
-    patch: false
-    todowrite: false
-    todoread: false
-    webfetch: true
-    context7*: false
-    brave*: true
+permission:
+    bash: deny
+    edit: deny
+    write: deny
+    read: deny
+    grep: deny
+    glob: deny
+    list: deny
+    patch: deny
+    todowrite: deny
+    todoread: deny
+    webfetch: allow
+    context7*: deny
+    brave*: allow
 ---
 # Chat Agent
 
