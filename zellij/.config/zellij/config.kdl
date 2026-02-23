@@ -173,6 +173,30 @@ keybinds clear-defaults=true {
                 x "35%"
             };
         }
+        bind "b" {
+            SwitchToMode "Normal";
+            Run "zestty" "back" {
+                floating true
+                close_on_exit true
+                name ""
+            };
+        }
+        bind "N" {
+            SwitchToMode "Normal";
+            Run "zestty" "next" {
+                floating true
+                close_on_exit true
+                name ""
+            };
+        }
+        bind "P" {
+            SwitchToMode "Normal";
+            Run "zestty" "previous" {
+                floating true
+                close_on_exit true
+                name ""
+            };
+        }
     }
     shared_except "locked" {
         bind "Alt d" { Detach; }
