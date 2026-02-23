@@ -30,7 +30,49 @@ keybinds clear-defaults=true {
         bind "z" { TogglePaneFrames; SwitchToMode "Normal"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "Normal"; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
-        bind "c" { SwitchToMode "RenamePane"; PaneNameInput 0;}
+
+        bind "c" {
+            MessagePlugin "zj-handful" { payload "pick"; }
+        }
+
+        bind "C" {
+            MessagePlugin "zj-handful" { payload "pick-hide"; }
+        }
+
+        bind "v" {
+            MessagePlugin "zj-handful" { payload "place"; }
+            SwitchToMode "Normal"
+        }
+
+        bind "V" {
+            MessagePlugin "zj-handful" { payload "throw"; }
+            SwitchToMode "Normal"
+        }
+
+        bind "W" {
+            MessagePlugin "zj-handful" { payload "toss"; }
+            SwitchToMode "Normal"
+        }
+
+        bind "E" {
+            MessagePlugin "zj-handful" { payload "spike"; }
+            SwitchToMode "Normal"
+        }
+
+        bind "s" {
+            MessagePlugin "zj-handful" { payload "squeeze"; }
+            SwitchToMode "Normal"
+        }
+
+        bind "D" {
+            MessagePlugin "zj-handful" { payload "drop"; }
+            SwitchToMode "Normal"
+        }
+
+        bind "K" {
+            MessagePlugin "zj-handful" { payload "chuck"; }
+            SwitchToMode "Normal"
+        }
     }
     move {
         bind "n" "Tab" { MovePane; }
@@ -245,6 +287,7 @@ keybinds clear-defaults=true {
 }
 
 plugins {
+    zj-handful location="file:~/.tool-bin/wasm/zj-handful.wasm"
     zjstatus location="file:~/.tool-bin/wasm/zjstatus.wasm" {
         border_enabled "false"
         hide_frame_except_for_search "true"
