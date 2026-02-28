@@ -16,6 +16,15 @@
             "url": "https://mcp.context7.com/mcp",
             "enabled": true
         },
+        "github": {
+            "type": "remote",
+            "url": "https://api.githubcopilot.com/mcp",
+            "oauth": false,
+            "headers": {
+                "Authorization": "Bearer {env:GITHUB_PAT}"
+            },
+            "enabled": true
+        },
         "brave": {
             "type": "local",
             "command": ["npx", "@brave/brave-search-mcp-server", "--transport", "stdio"],
@@ -26,12 +35,14 @@
         "plan": {
             "permission": {
                 "context7*": "allow",
-                "brave_web_search": "allow"
+                "brave_web_search": "allow",
+                "github*": "allow",
             }
         },
         "build": {
             "permission": {
                 "context7*": "allow",
+                "github*": "allow",
             }
         }
     },

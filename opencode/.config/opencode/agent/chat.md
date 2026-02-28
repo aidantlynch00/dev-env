@@ -15,6 +15,7 @@ permission:
     webfetch: allow
     context7*: deny
     brave*: allow
+    github*: allow
 ---
 # Chat Agent
 
