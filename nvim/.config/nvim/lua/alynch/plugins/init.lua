@@ -9,6 +9,7 @@ local require_configs = function()
     require("alynch.plugins.neotree")
     require("alynch.plugins.lualine")
     require("alynch.plugins.obsidian")
+    require("alynch.plugins.leetcode")
 end
 
 local bootstrap_packer = function()
@@ -104,6 +105,9 @@ return require("packer").startup(function(use)
 
     -- colorschemes
     use "folke/tokyonight.nvim"
+
+    -- other
+    use "kawre/leetcode.nvim"
 
 	-- sync packer after bootstrapping
 	if bootstrapped then
