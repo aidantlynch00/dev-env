@@ -1,6 +1,7 @@
 local languages = {
     "c",
     "cpp",
+    "c_sharp",
     "rust",
     "lua",
     "bash",
