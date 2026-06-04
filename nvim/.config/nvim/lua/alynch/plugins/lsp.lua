@@ -1,4 +1,4 @@
-local lang_servers = { "rust_analyzer", "clangd", "lua_ls", "bashls", "ts_ls", "html", "cssls" }
+local lang_servers = { "rust_analyzer", "clangd", "lua_ls", "bashls", "ts_ls", "html", "cssls", "roslyn_ls" }
 
 require("mason").setup()
 require("mason-lspconfig").setup {
