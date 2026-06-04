@@ -1,5 +1,17 @@
-require("obsidian").setup({
-    legacy_commands = false,
-    workspaces = {
-    },
-})
+local success, workspaces = pcall(require, "workspaces")
+if not success then
+    workspaces = {}
+end
+
+if not vim.tbl_isempty(workspaces) then
+    require("obsidian").setup({
+        legacy_commands = false,
+        ui = {
+            enable = false
+        },
+        picker = {
+            name = "telescope.nvim",
+        },
+        workspaces = workspaces,
+    })
+end
