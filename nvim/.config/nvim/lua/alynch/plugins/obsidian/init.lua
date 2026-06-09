@@ -1,4 +1,4 @@
-local success, workspaces = pcall(require, "workspaces")
+local success, workspaces = pcall(require, "alynch.plugins.obsidian.workspaces")
 if not success then
     workspaces = {}
 end
