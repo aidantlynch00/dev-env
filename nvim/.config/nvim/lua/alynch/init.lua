@@ -1,3 +1,4 @@
+require("alynch.util")
 require("alynch.config")
 require("alynch.floating")
 require("alynch.plugins")
