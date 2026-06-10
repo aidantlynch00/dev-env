@@ -1,0 +1,23 @@
+nvim/.config/nvim/lua/alynch/plugins/lsp.lua
+  510bc6899c311a00 27-36,38,40-75,78,92,96,99-104
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "30d2045edc555c721ec31d982b03652acfb53e92",
+  "prompts": {
+    "510bc6899c311a00": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "1b175c9d-885a-4b35-92b7-a309feb9360f",
+        "model": "GPT-5.4 Medium Thinking"
+      },
+      "human_author": "Aidan Lynch",
+      "messages": [],
+      "total_additions": 52,
+      "total_deletions": 14,
+      "accepted_lines": 42,
+      "overriden_lines": 3
+    }
+  }
+}
