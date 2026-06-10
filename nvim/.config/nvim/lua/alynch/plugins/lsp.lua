@@ -31,7 +31,12 @@ local default_diagnostic_settings = {
 }
 
 local servers = {
-    ["rust_analyzer"] = { },
+    ["rust_analyzer"] = {
+        install = false,
+        settings = concat_tables({
+            command = { "rust-analyzer" },
+        }, default_diagnostic_settings),
+    },
     ["clangd"] = {
         install = false,
         settings = concat_tables({
