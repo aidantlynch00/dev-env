@@ -24,6 +24,7 @@ local servers = {
     ["lua_ls"] = {
         automatic_enable = false,
     },
+    ["jedi_language_server"] = { },
     ["bashls"] = { },
     ["ts_ls"] = { },
     ["html"] = { },
