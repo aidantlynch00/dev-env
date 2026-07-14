@@ -75,10 +75,6 @@ vim.g.coq_settings = {
 
 vim.diagnostic.config(default_diagnostic_settings)
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    default_diagnostic_settings
-)
 
 for server, options in pairs(servers) do
     if vim.tbl_isempty(options) then
