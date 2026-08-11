@@ -42,6 +42,12 @@ vim.pack.add({
 	"https://github.com/neovim/nvim-lspconfig",
 	"https://github.com/seblyng/roslyn.nvim",
 
+    -- completions
+    {
+        src = "https://github.com/saghen/blink.cmp",
+        version = "v1",
+    },
+
 	-- symbol tree
 	"https://github.com/stevearc/aerial.nvim",
 
@@ -53,17 +59,14 @@ vim.pack.add({
 })
 
 -- require plugin configurations
-local require_configs = function()
-	require("alynch.plugins.treesitter")
-	require("alynch.plugins.tokyonight")
-	require("alynch.plugins.telescope")
-	require("alynch.plugins.harpoon")
-	require("alynch.plugins.lsp")
-	require("alynch.plugins.aerial")
-	require("alynch.plugins.neotree")
-	require("alynch.plugins.lualine")
-	require("alynch.plugins.obsidian")
-	require("alynch.plugins.leetcode")
-end
-
-require_configs()
+require("alynch.plugins.treesitter")
+require("alynch.plugins.tokyonight")
+require("alynch.plugins.telescope")
+require("alynch.plugins.harpoon")
+require("alynch.plugins.blink")
+require("alynch.plugins.lsp")
+require("alynch.plugins.aerial")
+require("alynch.plugins.neotree")
+require("alynch.plugins.lualine")
+require("alynch.plugins.obsidian")
+require("alynch.plugins.leetcode")

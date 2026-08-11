@@ -1,3 +1,4 @@
+local blink = require("blink.cmp")
 local mason = require("mason")
 local lspconfig = require("mason-lspconfig")
 
@@ -65,7 +66,6 @@ lspconfig.setup {
 -- configure diagnostics
 vim.diagnostic.config(default_diagnostic_settings)
 
-
 for server, options in pairs(servers) do
     if vim.tbl_isempty(options) then
         options = {
@@ -73,5 +73,6 @@ for server, options in pairs(servers) do
         }
     end
 
+    options.capabilities = blink.get_lsp_capabilities(options.capabilities)
     vim.lsp.enable(server, options)
 end
