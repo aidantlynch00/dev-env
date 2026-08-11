@@ -9,3 +9,6 @@ vim.opt.relativenumber = true
 
 -- make windows split right by default
 vim.opt.splitright = true
+
+-- disable mouse popup menu
+vim.opt.mousemodel = "extend"
