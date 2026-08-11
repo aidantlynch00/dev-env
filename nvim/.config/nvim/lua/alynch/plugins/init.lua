@@ -1,111 +1,69 @@
+vim.api.nvim_create_autocmd("PackChanged", {
+	callback = function(ev)
+		local name, kind = ev.data.spec.name, ev.data.kind
+		-- build libfzf for telescope-fzf-native
+		if name == "telescope-fzf-native" and (kind == "install" or kind == "update") then
+			vim.system({ "make" }, { cwd = ev.data.path }):wait()
+		end
+	end,
+})
+
+vim.pack.add({
+	-- dependencies
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/kkharji/sqlite.lua",
+	"https://github.com/nvim-tree/nvim-web-devicons",
+	"https://github.com/MunifTanjim/nui.nvim",
+
+	-- notes
+	"https://github.com/MeanderingProgrammer/render-markdown.nvim",
+	"https://github.com/obsidian-nvim/obsidian.nvim",
+
+	{
+		src = "https://github.com/nvim-neo-tree/neo-tree.nvim",
+		version = "v3.x",
+	},
+
+	"https://github.com/tpope/vim-surround",
+	"https://github.com/tpope/vim-repeat",
+	"https://github.com/nvim-lualine/lualine.nvim",
+	"https://github.com/arborist-ts/arborist.nvim",
+	"https://github.com/nvim-telescope/telescope.nvim",
+	"https://github.com/nvim-telescope/telescope-fzf-native.nvim",
+
+	{
+		src = "https://github.com/ThePrimeagen/harpoon",
+		version = "harpoon2",
+	},
+
+	-- configure LSPs
+	"https://github.com/williamboman/mason.nvim",
+	"https://github.com/williamboman/mason-lspconfig.nvim",
+	"https://github.com/neovim/nvim-lspconfig",
+	"https://github.com/seblyng/roslyn.nvim",
+
+	-- symbol tree
+	"https://github.com/stevearc/aerial.nvim",
+
+	-- colorschemes
+	"https://github.com/folke/tokyonight.nvim",
+
+	-- other
+	"https://github.com/kawre/leetcode.nvim",
+})
+
 -- require plugin configurations
 local require_configs = function()
-    require("alynch.plugins.treesitter")
-    require("alynch.plugins.tokyonight")
-    require("alynch.plugins.telescope")
-    require("alynch.plugins.harpoon")
-    require("alynch.plugins.lsp")
-    require("alynch.plugins.aerial")
-    require("alynch.plugins.neotree")
-    require("alynch.plugins.lualine")
-    require("alynch.plugins.obsidian")
-    require("alynch.plugins.leetcode")
+	require("alynch.plugins.treesitter")
+	require("alynch.plugins.tokyonight")
+	require("alynch.plugins.telescope")
+	require("alynch.plugins.harpoon")
+	require("alynch.plugins.lsp")
+	require("alynch.plugins.aerial")
+	require("alynch.plugins.neotree")
+	require("alynch.plugins.lualine")
+	require("alynch.plugins.obsidian")
+	require("alynch.plugins.leetcode")
 end
 
-local bootstrap_packer = function()
-	local fn = vim.fn
-	local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
-	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
-		vim.cmd [[packadd packer.nvim]]
-		return true
-	end
-	return false
-end
-
-local bootstrapped = bootstrap_packer()
-
-return require("packer").startup(function(use)
-	use "wbthomason/packer.nvim"
-    use "nvim-lua/plenary.nvim"
-
-    -- notes
-    use "kkharji/sqlite.lua"
-    use "MeanderingProgrammer/render-markdown.nvim"
-    use "obsidian-nvim/obsidian.nvim"
-
-    use {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v3.x",
-        requires = {
-            "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons",
-            "MunifTanjim/nui.nvim"
-        }
-    }
-
-
-    use "tpope/vim-surround"
-    use "tpope/vim-repeat"
-
-    use {
-        "nvim-lualine/lualine.nvim",
-        requires = {
-            "nvim-tree/nvim-web-devicons",
-            opt = true
-        }
-    }
-
-    use "arborist-ts/arborist.nvim"
-
-    use {
-        "nvim-telescope/telescope.nvim",
-        requires = {
-            "nvim-lua/plenary.nvim"
-        }
-    }
-
-    use {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        run = "make"
-    }
-
-    use {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        requires = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim"
-        }
-    }
-
-    -- configure LSPs
-    use "williamboman/mason.nvim"
-    use "williamboman/mason-lspconfig.nvim"
-    use "neovim/nvim-lspconfig"
-    use "seblyng/roslyn.nvim"
-
-    -- completion
-    use {
-        "ms-jpq/coq_nvim",
-        requires = {
-            "ms-jpq/coq.artifacts"
-        }
-    }
-
-    -- symbol tree
-    use "stevearc/aerial.nvim"
-
-    -- colorschemes
-    use "folke/tokyonight.nvim"
-
-    -- other
-    use "kawre/leetcode.nvim"
-
-	-- sync packer after bootstrapping
-	if bootstrapped then
-		require("packer").sync()
-	end
-
-    require_configs()
-end)
+require_configs()

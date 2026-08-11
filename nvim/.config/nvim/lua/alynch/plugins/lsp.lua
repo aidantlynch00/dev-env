@@ -1,4 +1,3 @@
-local coq = require("coq")
 local mason = require("mason")
 local lspconfig = require("mason-lspconfig")
 
@@ -63,16 +62,7 @@ lspconfig.setup {
     },
 }
 
--- configure coq
-vim.g.coq_settings = {
-    auto_start = "shut-up",
-    display = {
-        pum = {
-            fast_close = false
-        }
-    }
-}
-
+-- configure diagnostics
 vim.diagnostic.config(default_diagnostic_settings)
 
 
@@ -83,7 +73,5 @@ for server, options in pairs(servers) do
         }
     end
 
-    vim.lsp.enable(server, coq.lsp_ensure_capabilities(options))
+    vim.lsp.enable(server, options)
 end
-
-vim.cmd("COQnow -s")
