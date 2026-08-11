@@ -2,7 +2,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
 	callback = function(ev)
 		local name, kind = ev.data.spec.name, ev.data.kind
 		-- build libfzf for telescope-fzf-native
-		if name == "telescope-fzf-native" and (kind == "install" or kind == "update") then
+		if name == "telescope-fzf-native.nvim" and (kind == "install" or kind == "update") then
 			vim.system({ "make" }, { cwd = ev.data.path }):wait()
 		end
 	end,
