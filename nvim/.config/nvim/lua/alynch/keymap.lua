@@ -55,7 +55,7 @@ map("n", "<leader>gl", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
 
 -- set up aerial mapping
-map("n", "<leader>st", "<cmd>AerialToggle!<CR>")
+map("n", "<leader>st", AerialToggle)
 
 -- set up markdown rendering toggle
 map("n", "<leader>mdr", "<cmd>RenderMarkdown buf_toggle<CR>")
