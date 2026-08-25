@@ -1,3 +1,22 @@
+local neotree = require("neo-tree.command");
+
+local winid = nil
+function NeotreeToggle()
+    if winid ~= nil then
+        neotree.execute({ action = "close" })
+    else
+        neotree.execute({ reveal = true })
+    end
+end
+
+local handle_open = function(args)
+    winid = args.winid
+end
+
+local handle_close = function(args)
+    winid = nil
+end
+
 require("neo-tree").setup {
     filesystem = {
         filtered_items = {
@@ -8,18 +27,14 @@ require("neo-tree").setup {
             },
         },
     },
+    event_handlers = {
+        {
+            event = "neo_tree_window_after_open",
+            handler = handle_open,
+        },
+        {
+            event = "neo_tree_window_after_close",
+            handler = handle_close,
+        },
+    },
 }
-
-local neotree = require("neo-tree.command");
-local toggle = false
-
-function NeotreeToggle()
-    if toggle then
-        neotree.execute({ action = "close" })
-    else
-        neotree.execute({ reveal = true })
-    end
-
-    toggle = not toggle
-end
-
