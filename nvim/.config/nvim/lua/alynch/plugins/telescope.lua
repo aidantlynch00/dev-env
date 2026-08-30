@@ -12,10 +12,12 @@ telescope.setup {
         },
         mappings = {
             i = {
-                ["<C-D>"] = false,
-                ["<C-U>"] = false,
-                ["<C-E>"] = actions.preview_scrolling_down,
-                ["<C-Y>"] = actions.preview_scrolling_up,
+                ["<C-d>"] = false,
+                ["<C-u>"] = false,
+                ["<C-j>"] = actions.move_selection_next,
+                ["<C-k>"] = actions.move_selection_previous,
+                ["<C-e>"] = actions.preview_scrolling_down,
+                ["<C-y>"] = actions.preview_scrolling_up,
             },
         },
         file_ignore_patterns = {
@@ -35,7 +37,7 @@ telescope.setup {
         buffers = {
             mappings = {
                 i = {
-                    ["<C-D>"] = actions.delete_buffer
+                    ["<C-d>"] = actions.delete_buffer
                 },
             },
         },
