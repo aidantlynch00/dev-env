@@ -487,6 +487,8 @@ theme "tokyonight-storm"
 //
 // scrollback_editor "/usr/bin/vim"
 
+scroll_mode_sync false
+
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
 // or should each user have their own cursor (false)
