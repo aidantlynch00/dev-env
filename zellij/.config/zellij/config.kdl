@@ -307,28 +307,16 @@ plugins {
         // tokyonight-storm
         color_dark_text "#1d202f"
         color_light_text "#c0caf5"
-        color_widget1_bg "#6a708e"
-        color_widget2_bg "#525872"
-        color_widget3_bg "#3b4056"
+        color_widget_bg "#6a708e"
         color_normal_tab_bg "#4f6599"
         color_active_tab_bg "#7aa2f7"
 
-        format_left "{tabs}"
-        format_right "#[fg=$widget1_bg]#[fg=$light_text,bg=$widget1_bg]{session}#[fg=$widget1_bg] {command_battery} {command_time}"
+        format_left " {tabs}"
+        format_right "#[fg=$widget_bg]#[fg=$light_text,bg=$widget_bg]{session}#[fg=$widget_bg] "
 
         tab_separator " "
         tab_normal "#[fg=$normal_tab_bg]#[fg=$dark_text,bg=$normal_tab_bg]{name}#[fg=$normal_tab_bg]"
         tab_active "#[fg=$active_tab_bg]#[fg=$dark_text,bg=$active_tab_bg]{name}#[fg=$active_tab_bg]"
-
-        command_battery_command "sh -c \"~/.tool-bin/shell/bash/battery.sh\""
-        command_battery_format "#[fg=$widget2_bg]#[fg=$light_text,bg=$widget2_bg]{stdout}#[fg=$widget2_bg]"
-        command_battery_interval "60"
-        command_battery_rendermode "static"
-
-        command_time_command "sh -c \"date +%R\""
-        command_time_format "#[fg=$widget3_bg]#[fg=$light_text,bg=$widget3_bg] {stdout}#[fg=$widget3_bg]"
-        command_time_interval "5"
-        command_time_rendermode "static"
     }
 }
 

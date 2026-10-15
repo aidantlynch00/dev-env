@@ -1,9 +1,5 @@
 format = """
 [](fg:#6a708e)\
-$time\
-[](fg:#3b4056 bg:#525872)\
-${custom.battery}\
-[](fg:#525872 bg:#6a708e)\
 $username\
 $hostname\
 [](fg:#6a708e bg:#6483c8)\
@@ -14,17 +10,6 @@ $git_branch\
 \n\
 $character
 """
-
-[time]
-disabled = false
-time_format = "%R" # Hour:Minute Format
-format = "[  $time](fg:#c0caf5 bg:#3b4056)"
-
-[custom.battery]
-disabled = false
-when = true
-command = "~/.tool-bin/shell/bash/battery.sh"
-format = "[ $output](bg:#525872)"
 
 [username]
 disabled = false
