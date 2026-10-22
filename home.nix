@@ -5,14 +5,15 @@
   home.homeDirectory = "/home/alynch";
 
   # Import all dev-env home-manager modules (programs enabled by default)
-  imports = [
-    inputs.dev-env.flake.modules.homeManager.ghostty
-    inputs.dev-env.flake.modules.homeManager.fastfetch
-    inputs.dev-env.flake.modules.homeManager.git
-    inputs.dev-env.flake.modules.homeManager.nvim
-    inputs.dev-env.flake.modules.homeManager.starship
-    inputs.dev-env.flake.modules.homeManager.yazi
-    inputs.dev-env.flake.modules.homeManager.zellij
+  imports = with inputs.dev-env.flake.modules.homeManager; [
+    ghostty
+    fastfetch
+    git
+    nvim
+    starship
+    yazi
+    zellij
+    bash
   ];
 
   # Git user info (override in machine-specific config if needed)
@@ -28,9 +29,6 @@
     go
     jdk21
   ];
-
-  # Shell
-  programs.bash.enable = true;
 
   # XDG
   xdg.enable = true;

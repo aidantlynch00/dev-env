@@ -7,4 +7,9 @@ in
   xdg.configFile."yazi" = {
     source = lib.mkOutOfStoreSymlink "${filePath}/.config/yazi";
   };
+
+  home.file.".bashrc.d/yazi.sh" = {
+    source = lib.mkOutOfStoreSymlink "${filePath}/.bashrc.d/yazi.sh";
+    executable = true;
+  };
 }

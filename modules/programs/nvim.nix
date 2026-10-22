@@ -12,4 +12,6 @@ in
   xdg.configFile."nvim" = {
     source = lib.mkOutOfStoreSymlink "${filePath}/.config/nvim";
   };
+
+  home.sessionVariables.EDITOR = "nvim";
 }

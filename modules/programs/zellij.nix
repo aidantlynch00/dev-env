@@ -7,4 +7,6 @@ in
   xdg.configFile."zellij" = {
     source = lib.mkOutOfStoreSymlink "${filePath}/.config/zellij";
   };
+
+  home.shellAliases.zj = "zellij";
 }
