@@ -1,5 +1,6 @@
+{ self, config, lib, ... }:
 {
-  flake.homeModules.zellij = { self, config, lib, ... }: let
+  flake.homeModules.zellij = let
     filePath = "${config.home.homeDirectory}/.dev-env/files/zellij";
   in
   {

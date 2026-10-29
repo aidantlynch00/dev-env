@@ -1,6 +1,6 @@
-{ self, ... }:
+{ self, pkgs, ... }:
 {
-  flake.homeModules.development = { pkgs, ... }: {
+  flake.homeModules.development = {
     imports = with self.homeModules; [
       languages
     ];

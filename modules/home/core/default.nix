@@ -1,6 +1,6 @@
-{ self, ... }:
+{ self, pkgs, ... }:
 {
-  flake.homeModules.core = { pkgs, ... }: {
+  flake.homeModules.core = {
     imports = with self.homeModules; [
       xdg
       fonts
