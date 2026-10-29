@@ -1,13 +1,13 @@
 {
-  flake.homeModules.fzf = { config, lib, ... }: let
-    filePath = "${config.home.homeDirectory}/.dev-env/files/fzf";
-  in
-  {
+  flake.homeModules.fzf = {
     programs.fzf.enable = true;
 
+    home.sessionVariables."FZF_CTRL_R_OPTS" = "--height 7";
     home.file.".bashrc.d/fzf.sh" = {
-      source = lib.file.mkOutOfStoreSymlink "${filePath}/.bashrc.d/fzf.sh";
       executable = true;
+      text = ''
+        eval "$(fzf --bash)"
+      '';
     };
   };
 }
