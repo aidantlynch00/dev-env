@@ -1,9 +1,10 @@
 {
   flake.homeModules.fonts = { pkgs, ... }: {
-    fonts.fonts = with pkgs; [
-      nerd-fonts-hack
+    fonts.fontconfig.enable = true;
+    home.packages = with pkgs; [
+      nerd-fonts.hack
       noto-fonts
-      noto-fonts-emoji
+      noto-fonts-color-emoji
     ];
   };
 }

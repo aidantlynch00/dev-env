@@ -8,7 +8,11 @@
         lg = "lazygit";
       };
 
-      shellInit = ''
+      initExtra = ''
+        if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+          source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+        fi
+
         for script in $HOME/.bashrc.d/*; do
           if [ -x "$script" ]; then
             source $script

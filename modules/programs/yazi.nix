@@ -1,12 +1,12 @@
 {
-  flake.homeModules.yazi = { config, lib, ... }: let
+  flake.homeModules.yazi = { config, ... }: let
     filePath = "${config.home.homeDirectory}/.dev-env/files/yazi";
   in
   {
     programs.yazi.enable = true;
 
     xdg.configFile."yazi" = {
-      source = lib.file.mkOutOfStoreSymlink "${filePath}/.config/yazi";
+      source = config.lib.file.mkOutOfStoreSymlink "${filePath}/.config/yazi";
     };
 
     home.shellAliases.y = "yazi";

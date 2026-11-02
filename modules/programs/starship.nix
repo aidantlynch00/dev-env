@@ -37,12 +37,5 @@
         format = "([ $symbol$branch](fg:#7aa2f7 bg:#383e5a))"
       '';
     };
-
-    home.file.".bashrc.d/starship.sh" = {
-      executable = true;
-      text = ''
-        eval "$(starship init bash)"
-      '';
-    };
   };
 }

@@ -1,8 +1,12 @@
-{ self, pkgs, ... }:
+{ self, ... }:
 {
-  flake.homeModules.development = {
+  flake.homeModules.development = { pkgs, ...}: {
     imports = with self.homeModules; [
       languages
+    ];
+
+    home.packages = with pkgs; [
+      lazygit
     ];
   };
 }

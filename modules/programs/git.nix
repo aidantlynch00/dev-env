@@ -4,8 +4,10 @@
       enable = true;
       lfs.enable = true;
 
-      userName = "Aidan Lynch";
-      userEmail = "aidantlynch00@gmail.com";
+      settings.user = {
+        name = "Aidan Lynch";
+        email = "aidantlynch00@gmail.com";
+      };
     };
 
     programs.difftastic = {

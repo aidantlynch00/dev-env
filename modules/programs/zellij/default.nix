@@ -1,6 +1,6 @@
-{ self, config, lib, ... }:
+{ self, ... }:
 {
-  flake.homeModules.zellij = let
+  flake.homeModules.zellij = { config, ... }: let
     filePath = "${config.home.homeDirectory}/.dev-env/files/zellij";
   in
   {
@@ -11,7 +11,7 @@
     programs.zellij.enable = true;
 
     xdg.configFile."zellij" = {
-      source = lib.mkOutOfStoreSymlink "${filePath}/.config/zellij";
+      source = config.lib.file.mkOutOfStoreSymlink "${filePath}/.config/zellij";
     };
 
     home.shellAliases.zj = "zellij";
