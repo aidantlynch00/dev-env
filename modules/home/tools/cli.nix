@@ -10,8 +10,8 @@
       duf
       dust
       just
-      rg
-      sk
+      ripgrep
+      skim
       tldr
       yq
     ];

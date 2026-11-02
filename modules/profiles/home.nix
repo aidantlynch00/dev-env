@@ -8,16 +8,18 @@ in
     modules = with self.homeModules; [
       core
       development
+      tui
+      cli
       alynch
       ghostty
       fastfetch
       git
       nvim
+      opencode
       starship
       yazi
       zellij
       bash
-      fzf
     ];
   };
 }
