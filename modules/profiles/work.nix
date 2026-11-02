@@ -3,9 +3,8 @@ let
   system = builtins.head config.systems;
 in
 {
-  flake.homeConfigurations.home = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = inputs.nixpkgs.legacyPackages.${system};
-    modules = with self.homeModules; [
+  flake.homeModules.work = {
+    imports = with self.homeModules; [
       core
       development
       tui
@@ -15,7 +14,6 @@ in
       fastfetch
       git
       nvim
-      opencode
       starship
       yazi
       zellij
