@@ -2,8 +2,9 @@
 {
   flake.homeModules.core = {
     imports = with self.homeModules; [
-      xdg
+      scripts
       fonts
+      xdg
     ];
 
     programs.home-manager.enable = true;

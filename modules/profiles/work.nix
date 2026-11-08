@@ -7,17 +7,8 @@ in
     imports = with self.homeModules; [
       core
       development
-      tui
-      cli
-      alynch
       ghostty
-      fastfetch
-      git
-      nvim
-      starship
-      yazi
-      zellij
-      bash
+      terminal
     ];
   };
 }
