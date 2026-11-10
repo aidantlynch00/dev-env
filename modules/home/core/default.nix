@@ -2,8 +2,9 @@
 {
   flake.homeModules.core = {
     imports = with self.homeModules; [
-      scripts
       fonts
+      nix
+      scripts
       xdg
     ];
 
