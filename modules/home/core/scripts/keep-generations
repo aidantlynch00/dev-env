@@ -1,0 +1,29 @@
+#!/bin/sh
+
+usage() {
+    printf 'usage: %s <number of generations to keep>\n' "${0##*/}" >&2
+    exit 2
+}
+
+[ "$#" -eq 1 ] || usage
+
+num_to_keep=$1
+
+case $num_to_keep in
+    '' | *[!0-9]*) usage ;;
+esac
+
+[ "$num_to_keep" -gt 0 ] || usage
+
+ids=$(home-manager generations | awk '$4 == "id" { print $5 }' | sort -rn)
+remove_ids=$(
+    printf '%s\n' "$ids" |
+    tail -n "+$((num_to_keep + 1))" # skip number to keep
+)
+num_to_remove=$(echo "$remove_ids" | wc -l)
+
+[ -n "$remove_ids" ] || exit 0
+
+printf "Removing ${num_to_remove} generations...\n"
+home-manager remove-generations $remove_ids
+clean-nix-store

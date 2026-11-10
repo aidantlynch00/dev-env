@@ -9,7 +9,7 @@
       };
 
       initExtra = ''
-        source reload-hm-vars
+        source hm-session-vars
 
         for script in $HOME/.bashrc.d/*; do
           if [ -x "$script" ]; then

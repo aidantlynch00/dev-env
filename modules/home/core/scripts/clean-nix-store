@@ -1,0 +1,6 @@
+#!/bin/sh
+
+printf "Collecting garbage..."
+nix store gc
+printf "Optimising store..."
+nix store optimise
