@@ -11,6 +11,12 @@
       sideloadInitLua = true;
     };
 
+    home.packages = with pkgs; [
+      tree-sitter
+      dotnet-sdk
+      nodejs
+    ];
+
     xdg.configFile."nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${filePath}/.config/nvim";
     };
