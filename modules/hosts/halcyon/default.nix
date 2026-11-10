@@ -1,4 +1,4 @@
-{ config, lib, inputs, self, ... }:
+{ config, inputs, self, ... }:
 let
   system = builtins.head config.systems;
 in
@@ -13,7 +13,6 @@ in
   };
 
   flake.homeModules."halcyon" = { config, ... }: {
-    home.sessionVariables."ZESTTY_PLUGIN_URL" = lib.mkForce "file:$HOME/.tool-bin/wasm/zestty.wasm";
     home.file.".local/bin/zestty" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.tool-bin/current/bin/zestty";
     };

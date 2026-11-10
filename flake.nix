@@ -12,6 +12,8 @@
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
+
+    zestty.url = "github:aidantlynch00/zestty";
   };
 
   outputs = inputs:

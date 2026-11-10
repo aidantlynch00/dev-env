@@ -18,7 +18,6 @@ in
       email = lib.mkForce "Aidan.Lynch@intusurg.com";
     };
 
-    home.sessionVariables."ZESTTY_PLUGIN_URL" = lib.mkForce "file:$HOME/.tool-bin/wasm/zestty.wasm";
     home.file.".local/bin/zestty" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.tool-bin/current/bin/zestty";
     };
