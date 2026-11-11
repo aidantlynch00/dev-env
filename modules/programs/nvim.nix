@@ -13,7 +13,7 @@
 
     home.packages = with pkgs; [
       tree-sitter
-      dotnet-sdk
+      dotnet-sdk_11
       nodejs
     ];
 
