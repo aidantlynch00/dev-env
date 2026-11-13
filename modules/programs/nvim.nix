@@ -8,6 +8,7 @@
       package = pkgs.neovim-unwrapped;
       viAlias = true;
       vimAlias = true;
+      defaultEditor = true;
       sideloadInitLua = true;
     };
 
@@ -20,7 +21,5 @@
     xdg.configFile."nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${filePath}/.config/nvim";
     };
-
-    home.sessionVariables.EDITOR = "nvim";
   };
 }
