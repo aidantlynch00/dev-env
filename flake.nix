@@ -7,6 +7,12 @@
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
     };
+    scenefx = {
+      url = "github:wlrfx/scenefx";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     nixgl = {
       url = "github:nix-community/nixgl";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,8 +29,7 @@
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
-      inputs.scenefx.inputs.flake-utils.follows = "flake-utils";
-      inputs.scenefx.inputs.systems.follows = "systems";
+      inputs.scenefx.follows = "scenefx";
     };
     zestty = {
       url = "github:aidantlynch00/zestty";

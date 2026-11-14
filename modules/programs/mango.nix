@@ -1,10 +1,15 @@
 { inputs, ... }: {
-  flake.homeModules.mango = {
+  flake.homeModules.mango = { config, pkgs, ... }:
+  let
+    mango = inputs.mangowm.packages.${pkgs.stdenv.hostPlatform.system}.mango;
+  in
+  {
     imports = [ inputs.mangowm.hmModules.mango ];
 
     wayland.windowManager.mango = {
       enable = true;
       systemd.enable = true;
+      package = (config.lib.nixGL.wrap mango);
 
       settings = {
         # Appearance
