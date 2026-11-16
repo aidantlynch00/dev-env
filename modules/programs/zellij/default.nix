@@ -6,6 +6,7 @@
   {
     imports = with self.homeModules; [
       zestty
+      zjstatus
     ];
 
     programs.zellij.enable = true;

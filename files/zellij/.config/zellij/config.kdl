@@ -299,8 +299,8 @@ keybinds clear-defaults=true {
 }
 
 plugins {
-    zj-handful location="file:~/.tool-bin/wasm/zj-handful.wasm"
-    zjstatus location="file:~/.tool-bin/wasm/zjstatus.wasm" {
+    zj-handful location="file:~/.local/bin/zj-handful.wasm"
+    zjstatus location="file:~/.local/bin/zjstatus.wasm" {
         border_enabled "false"
         hide_frame_except_for_search "true"
 

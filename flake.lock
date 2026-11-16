@@ -170,6 +170,7 @@
     },
     "root": {
       "inputs": {
+        "crane": "crane",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
@@ -177,24 +178,25 @@
         "mangowm": "mangowm",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
+        "rust-overlay": "rust-overlay",
         "scenefx": "scenefx",
         "systems": "systems",
-        "zestty": "zestty"
+        "zestty": "zestty",
+        "zjstatus": "zjstatus"
       }
     },
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
-          "zestty",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1794216702,
-        "narHash": "sha256-J+4v+Olc/2mN/bSc9CuAQ/PB7c0w1mzDJK8JvS7rKmM=",
+        "lastModified": 1794733384,
+        "narHash": "sha256-VaXNWDU+9dXckN4BlZbrcYTTd9pIscLeiknbhHX4+lk=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "b70538330f20adc9665afa2976471eb5b85ebd1f",
+        "rev": "67f1944c7c99d8dbb57fa3d83043bc0a92cbcc56",
         "type": "github"
       },
       "original": {
@@ -246,14 +248,18 @@
     },
     "zestty": {
       "inputs": {
-        "crane": "crane",
+        "crane": [
+          "crane"
+        ],
         "flake-utils": [
           "flake-utils"
         ],
         "nixpkgs": [
           "nixpkgs"
         ],
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": [
+          "rust-overlay"
+        ]
       },
       "locked": {
         "lastModified": 1794293404,
@@ -266,6 +272,35 @@
       "original": {
         "owner": "aidantlynch00",
         "repo": "zestty",
+        "type": "github"
+      }
+    },
+    "zjstatus": {
+      "inputs": {
+        "crane": [
+          "crane"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": [
+          "rust-overlay"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789299614,
+        "narHash": "sha256-QKYI7Idl1kzvripwe8olf+s/L5Ko/9hDVZ3KNXwNYKw=",
+        "owner": "dj95",
+        "repo": "zjstatus",
+        "rev": "7e6dbfd43a1c7431f3969d9a565bcd6d5bbdce45",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dj95",
+        "repo": "zjstatus",
         "type": "github"
       }
     }

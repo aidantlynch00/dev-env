@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.homeModules.zestty = { pkgs, ... }:
+  flake.homeModules.zestty = { config, pkgs, ... }:
   let
     zestty = inputs.zestty.packages.${pkgs.stdenv.hostPlatform.system}.default;
   in
@@ -9,10 +9,15 @@
       zestty
     ];
 
+    home.file.".local/bin/zestty.wasm" = {
+      source = "${zestty}/bin/zestty.wasm";
+      executable = true;
+    };
+
     home.sessionVariables = {
       "ZESTTY_DELIM" = "$'\t'";
       "ZESTTY_PROJECT_DELIM" = ":";
-      "ZESTTY_PLUGIN_URL" = "file:${zestty}/bin/zestty.wasm";
+      "ZESTTY_PLUGIN_URL" = "file:${config.xdg.binHome}/zestty.wasm";
     };
 
     home.shellAliases = {

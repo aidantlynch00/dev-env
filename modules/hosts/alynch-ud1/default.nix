@@ -18,10 +18,6 @@ in
       email = lib.mkForce "Aidan.Lynch@intusurg.com";
     };
 
-    home.file.".local/bin/zestty" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.tool-bin/current/bin/zestty";
-    };
-
     targets.genericLinux = {
       enable = true;
       nixGL = {

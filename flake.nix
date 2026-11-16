@@ -20,6 +20,11 @@
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
+    crane.url = "github:ipetkov/crane";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -35,6 +40,15 @@
       url = "github:aidantlynch00/zestty";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.crane.follows = "crane";
+      inputs.rust-overlay.follows = "rust-overlay";
+    };
+    zjstatus = {
+      url = "github:dj95/zjstatus";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.crane.follows = "crane";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
   };
 
