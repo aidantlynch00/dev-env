@@ -6,8 +6,12 @@
         main = {
           term = "xterm-256color";
           app-id = "foot";
-          font = "Hack Mono:size=14";
+          font = "Hack Nerd Font Mono:size=12";
           initial-color-theme = "dark";
+          pad = "0x4x0x0";
+        };
+        csd = {
+          preferred = "none";
         };
         cursor = {
           style = "block";

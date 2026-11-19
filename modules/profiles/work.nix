@@ -7,7 +7,7 @@ in
     imports = with self.homeModules; [
       core
       development
-      ghostty
+      foot
       terminal
     ];
   };
