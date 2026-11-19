@@ -9,6 +9,7 @@ in
       development
       graphical
       terminal
+      ai
     ];
   };
 }

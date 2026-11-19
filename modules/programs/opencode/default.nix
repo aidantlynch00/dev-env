@@ -60,5 +60,11 @@
       agents = ./agents;
       commands = ./commands;
     };
+
+    home.shellAliases.oc = "opencode";
+    home.file.".bashrc.d/opencode.sh" = {
+      source = ./opencode.sh;
+      executable = true;
+    };
   };
 }

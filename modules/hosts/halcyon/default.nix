@@ -6,8 +6,8 @@ in
   flake.homeConfigurations."alynch@halcyon" = inputs.home-manager.lib.homeManagerConfiguration {
     pkgs = inputs.nixpkgs.legacyPackages.${system};
     modules = with self.homeModules; [
-      alynch
       full
+      alynch
       halcyon
     ];
   };
