@@ -5,8 +5,8 @@
   {
     programs.fastfetch.enable = true;
 
-    xdg.configFile."fastfetch" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${filePath}/.config/fastfetch";
+    xdg.configFile."fastfetch/config.jsonc" = {
+      source = ./config.jsonc;
     };
   };
 }
