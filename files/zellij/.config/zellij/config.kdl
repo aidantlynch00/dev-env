@@ -659,3 +659,5 @@ stacked_pane_list false
 web_client {
     font "monospace"
 }
+context_menu_enabled false
+on_quit "quit"
