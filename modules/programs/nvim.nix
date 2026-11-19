@@ -13,6 +13,9 @@
     };
 
     home.packages = with pkgs; [
+      gcc
+      cmake
+      gnumake
       tree-sitter
       dotnet-sdk_11
       nodejs
