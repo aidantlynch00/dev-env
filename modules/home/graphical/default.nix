@@ -5,6 +5,7 @@
       foot
       ghostty
       mango
+      noctalia
     ];
   };
 }
