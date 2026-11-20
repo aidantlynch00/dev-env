@@ -661,3 +661,4 @@ web_client {
 }
 context_menu_enabled false
 on_quit "quit"
+show_startup_tips false
