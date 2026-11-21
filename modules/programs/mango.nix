@@ -73,8 +73,20 @@
           end_ratio = 0.8;
         };
 
-        # fadein_begin_opacity = 0.5
-        # fadeout_begin_opacity = 0.8
+        fade_in_begin_opacity = 0.5;
+        fade_out_begin_opacity = 0.8;
+
+        # Window Behavior
+        no_border_when_single = 0;
+        focus = {
+          on_activate = 0;
+          cross_monitor = 0;
+          cross_tag = 0;
+        };
+        enable_floating_snap = 1;
+        snap_distance = 32;
+        cursor_size = 24;
+        drag_tile_to_tile = 1;
 
         # Scroller Layout
         scroller = {
@@ -89,14 +101,12 @@
 
         # Master-Stack Layout
         new_is_master = 1;
-        default_mfact = 0.55;
-        default_nmaster = 1;
-        smartgaps = 0;
+        default_master_factor = 0.55;
+        default_master_count = 1;
 
         # Overview
         hotarea_size = 10;
         enable_hotarea = 0;
-        ov_tab_mode = 0;
 
         # Tags
         tag_num = 9;
@@ -113,16 +123,16 @@
         ];
 
         # Appearance
-        # Default theme (tokyonight)
-        shadowscolor = 0x15161eff;
-        rootcolor = 0x1a1b26ff;
-        bordercolor = 0x586691ff;
-        focuscolor = 0x7aa2f7ff;
-        maximizescreencolor = 0xbb9af7ff;
-        urgentcolor = 0xf7768eff;
-        scratchpadcolor = 0x9ece6aff;
-        globalcolor = 0x003dbeff;
-        overlaycolor = 0x4f00deff;
+        # Theme (tokyonight)
+        shadows_color = "0x15161eff";
+        root_color = "0x1a1b26ff";
+        border_color = "0x586691ff";
+        focus_color = "0x7aa2f7ff";
+        maximized_screen_color = "0xbb9af7ff";
+        urgent_color = "0xf7768eff";
+        scratchpad_color = "0x9ece6aff";
+        global_color = "0x003dbeff";
+        overlay_color = "0x4f00deff";
 
         gap = {
           inner = {
@@ -141,51 +151,55 @@
         };
 
         # Input
+        axis = {
+          scroll_factor = 1.0;
+          bind_apply_timeout = 100;
+        };
+
         # Trackpad
         disable_trackpad = 0;
+        trackpad = {
+          scroll_factor = 1.0;
+          natural_scrolling = 0;
+          disable_while_typing = 1;
+          left_handed = 0;
+          middle_button_emulation = 0;
+        };
         tap_to_click = 1;
         tap_and_drag = 1;
         drag_lock = 1;
-        trackpad_natural_scrolling = 0;
-        disable_while_typing = 1;
-        left_handed = 0;
-        middle_button_emulation = 0;
         swipe_min_threshold = 1;
 
         # Mouse
-        mouse_natural_scrolling = 0;
-
-        # Window Behavior
-        no_border_when_single = 0;
-        axis_bind_apply_timeout = 100;
-        # inhibit_regardless_of_visibility = 0
-        sloppyfocus = 1;
-        warpcursor = 1;
-        focus = {
-          on_activate = 0;
-          cross_monitor = 0;
-          cross_tag = 0;
+        mouse = {
+          natural_scrolling = 0;
+          left_handed = 0;
         };
-        enable_floating_snap = 1;
-        snap_distance = 32;
-        cursor_size = 24;
-        drag_tile_to_tile = 1;
+
+        sloppy_focus = 1;
+        warp_cursor = 1;
 
         # Keyboard
         repeat = {
-          rate = 25;
-          delay = 600;
+          rate = 35;
+          delay = 400;
         };
-        numlockon = 0;
+
+        cursor_hide_on_keypress = 1;
+        numlock_on = 0;
         xkb_rules_layout = "us";
+
+        # Misc
+        sync_obj_enable = 1; # can help with stutters when gaming
+        allow_tearing = 1;
 
         # Key bindings
         bind = [
           # compositor controls
           "CTRL+SUPER,q,quit"
+          "CTRL+SUPER,r,reload_config"
 
           # switch layout
-          "CTRL+SUPER,l,switch_layout"
           "CTRL+SUPER,t,setlayout,tile"
           "CTRL+SUPER,s,setlayout,scroller"
           "CTRL+SUPER,p,switch_proportion_preset,"
@@ -268,7 +282,7 @@
 
           # media
           "NONE,XF86AudioPlay,spawn_shell,playerctl play-pause"
-          "NONE,XF86AudioPause,spawn_shell,playerctl play-pause"
+          # "NONE,XF86AudioPause,spawn_shell,playerctl play-pause"
           "NONE,XF86AudioNext,spawn_shell,playerctl next"
           "NONE,XF86AudioPrev,spawn_shell,playerctl previous"
 
